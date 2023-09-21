@@ -2,8 +2,8 @@
 
  
 ## 1. リポジトリのクローン
-このように環境構築の手順をこちらにまとめていただけると嬉しいです！  
-```$ git clone https://github.com/YuukiOgura/ToDo-App.git ```
+GitHubからくろーんしてきます。  
+```$ git clone https://github.com/YuukiOgura/ToDo_App.git ```
 
 ## 2. .envファイルの作成
 .env.exampleをコピーし、.envファイルを作成してください。  
