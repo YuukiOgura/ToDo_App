@@ -15,6 +15,15 @@
         <nav>
             <a href="/">ToDo App</a>
         </nav>
+        <div class="">
+            @if (Auth::check())
+                ようこそ！{{ Auth::user()->name }}
+            @else
+                <a href="{{ route('login') }}">ログイン</a>
+                <a href="{{ route('register') }}">会員登録</a>
+            @endif
+        </div>
+        </div>
     </header>
     <main>
         @auth
