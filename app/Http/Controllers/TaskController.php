@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Folder;
 use App\Models\Task;
-use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {

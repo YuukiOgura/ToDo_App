@@ -17,15 +17,11 @@ class FoldersTableSeeder extends Seeder
     //DBの設定はMigrationかModelに記載、Seederはあくまでも動作を確認する為のテストデータの挿入
     public function run(): void
     {
-
-        $user= DB::table('users')->first();//first()メソッドはレコード1行"だけ"を取得する
-
         $titles = ['プライベート','仕事','勉強'];
 
         foreach($titles as $title){
             DB::table('folders')->insert([
                 'title' => $title,
-                'user_id'=>$user->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
