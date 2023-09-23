@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Folder;
-use Illuminate\Support\Facades\Auth;
 
 class FolderController extends Controller
 {
@@ -23,18 +22,9 @@ class FolderController extends Controller
     public function create(Request $request)
     {
         $folder = new Folder();
-        $folder->title = $request->title;
-
-
-
-        /*
-        ユーザー認証の流れ
-        ログインフォーム（ユーザーが入力）
-        セッションに情報を保存（サーバー）
-        クッキーにセッションIDが入っている（ブラウザ）
-        クッキーのセッションIDと照らし合わせ（アプリケーション）
-        */
-
-        return redirect()->route('tasks.index', ['id' => $folder->id]);
+        $folder -> title = $request->title;
+        $folder ->save();
+        
+        return redirect()->route('tasks.index',['id'=>$folder->id]);
     }
 }
