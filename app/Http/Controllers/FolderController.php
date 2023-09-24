@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Folder;
+use Illuminate\Support\Facades\Auth;
 
 class FolderController extends Controller
 {
@@ -21,8 +22,11 @@ class FolderController extends Controller
 
     public function create(Request $request)
     {
+        $user = Auth::user();//認証済みユーザーの取得
+
         $folder = new Folder();
         $folder -> title = $request->title;
+        $folder -> user_id= $request->$user->id;
         $folder ->save();
         
         return redirect()->route('tasks.index',['id'=>$folder->id]);
