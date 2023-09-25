@@ -7,6 +7,8 @@ use App\Models\Folder;
 use App\Models\Task;
 
 class TaskController extends Controller
+
+//Viewで書いた値が、ルート（web.php）に入って、その入った値が下記の引数に入る。
 {
     public function index(int $id)//URLから渡ってきた引数
     {

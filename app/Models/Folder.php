@@ -18,7 +18,12 @@ class Folder extends Model
 
     public function tasks()
     {
-        return $this->hasMany('App\Models\Task');
+        return $this->hasMany(Task::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /* 
