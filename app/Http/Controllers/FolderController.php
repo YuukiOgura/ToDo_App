@@ -23,12 +23,12 @@ class FolderController extends Controller
     public function create(Request $request)
     {
         $user = Auth::user();//認証済みユーザーの取得
-
+        
         $folder = new Folder();
         $folder -> title = $request->title;
-        $folder -> user_id= $request->$user->id;
-        $folder ->save();
+        $folder -> user_id= $user->id;
+        $folder ->save();//認証済みユーザーに紐づけて保存する必要がある。
         
-        return redirect()->route('tasks.index',['id'=>$folder->id]);
+        return redirect()->route('tasks.index',['id'=>$folder->user_id]);
     }
 }
