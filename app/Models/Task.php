@@ -9,7 +9,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    public function folders()
+    public function folder()
     {
         return $this->belongsTo(Folder::class);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Folder;
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 
@@ -12,7 +13,9 @@ class TaskController extends Controller
 {
     public function index(int $id)//URLから渡ってきた引数
     {
-        $folders = Folder::all();//Folderモデルの情報を全て取得
+        $folders=Folder::where('user_id',Auth::user()->id)->get();
+        //下記の記述を変更して認証済みユーザーのテーブルだけ表示できた。
+        //$folders = Folder::all();//Folderモデルの情報を全て取得
         $current_folder = Folder::find($id);//プライマリーキーのレコードを1行取得(indexに渡ってきたURLの引数を元に取得)
 
         $tasks = $current_folder->tasks()->get();//Folder::find($id)と同じfolder_idレコードを持つ値をTaskクラス通しタスクテーブルから取得する。 
@@ -26,10 +29,10 @@ class TaskController extends Controller
         ]);
     }
     
-    public function showCreateTask(int $id)
+    public function showCreateTask(int $id)//tasks/createにURLに入っているidを渡す。
     {
         return view('tasks/create',[
-            'folder_id'=>$id,//tasks/createにURLに入っているidを渡す。
+            'folder_id'=>$id,
         ]);
     }
 
