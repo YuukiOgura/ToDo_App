@@ -9,8 +9,13 @@
 </head>
 
 <body>
-    
+    <a href="{{route('profile.edit')}}">
+        {{ $name }}
+    </a>
 
+    <div class="">
+        <a href="{{route('tasks.index',['id' => $id])}}">ToDo作成</a>
+    </div>
     <form method="POST" action="{{ route('logout') }}">
         @csrf
 
