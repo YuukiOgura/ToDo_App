@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('folders', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned();
-
-            $table->foreign('user_id')->references('id')->on('users');
+        Schema::table('tasks',function(Blueprint $table){
+            $table->renameColumn('status','priority');
         });
     }
 
@@ -23,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('folders', function (Blueprint $table) {
-            $table->dropForeign('folders_user_id_foreign');
-            $table->dropColumn('user_id');
+        Schema::table('tasks',function(Blueprint $table){
+            $table->renameColumn('priority','status');
         });
     }
 };

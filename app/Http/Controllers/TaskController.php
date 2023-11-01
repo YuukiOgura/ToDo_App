@@ -24,7 +24,6 @@ class TaskController extends Controller
             'folders' => $folders,//Folderモデルの情報を渡す
             'current_folder_id' => $current_folder->id,
             //Folderモデル中にあるidを呼び出して渡す（Folder::find($id)ではレコード毎取ってきている為、idを指定）
-
             'tasks'=>$tasks,
         ]);
     }
@@ -43,7 +42,8 @@ class TaskController extends Controller
         $task = new Task();
         $task ->title = $request->title_task;
         $task ->due_date = $request->due_date;
-
+        $task ->priority = $request->priority;
+        $task ->textarea = $request->textarea;
         $current_folder->tasks()->save($task);
 
         return redirect()->route('tasks.index',['id'=>$current_folder->id]);

@@ -18,8 +18,9 @@ class TasksTableSeeder extends Seeder
             DB::table('tasks')->insert([//DBファサードを利用し、foldersテーブルを取得insertメソッドを呼び出して追加する。
                 'folder_id' => 1,
                 'title' => "サンプルタスク{$num}",
-                'status' => $num,
+                'priority' => $num,
                 'due_date' => Carbon::now()->addDay($num),//Carbonで現在時刻を取得し、addDayで取得した日から$num日加算した日数を取得。
+                'textarea' => "サンプル",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
