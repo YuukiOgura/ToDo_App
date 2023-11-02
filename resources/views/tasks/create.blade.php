@@ -8,11 +8,24 @@
                 <div class="">
                     <form action="{{ route('tasks.create', ['id' => $folder_id]) }}" method="post">
                         <!--
-                                    routeはweb.phpの記載をURLの形に変化できるメソッドです。つまりは = コントローラーに情報を渡している。
-                                    さらにはmethodを"post"に変更する事で情報の漏洩対策。
-                                    下記のcsrfもクロスサイトスクリプティングに対応している。
-                                -->
+                                        routeはweb.phpの記載をURLの形に変化できるメソッドです。つまりは = コントローラーに情報を渡している。
+                                        さらにはmethodを"post"に変更する事で情報の漏洩対策。
+                                        下記のcsrfもクロスサイトスクリプティングに対応している。
+                                    -->
                         @csrf
+
+                        <!--
+                                目的はTaskControllerでfolderidを選択できるようにする。
+                                create.blade.phpでフォルダの選択をする1
+                            -->
+                        <div class="">
+                            <select name="folders_title">
+                                @foreach ($folders_title as $title)
+                                    <option value = "{{ $title }}">{{ $title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="">
                             <label for="title_task">タスク名</label> <br><!--forとidで紐づけ-->
                             <input type="text" name="title_task" id="title_task"><!--nameは送信された時のキー名-->

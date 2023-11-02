@@ -30,15 +30,34 @@ class TaskController extends Controller
     
     public function showCreateTask(int $id)//tasks/createにURLに入っているidを渡す。
     {
-        return view('tasks/create',[
-            'folder_id'=>$id,
+        $user = Auth::user();
+        $folders = $user->folders;
+        $folders_title = [];
+        foreach($folders as $folder){
+            $folders_title[] = $folder -> title;
+        }
+       /*  
+        $folderWithtask = Folder::with('tasks')->get();
+        // ループを使用して親テーブルのカラムを取得する。
+        $data = [];
+        foreach ($folderWithtask as $task) {
+            $data[$task->id] = [
+                'title' => $task->title, // 親テーブルのカラム
+            ];
+        }
+         */
+        return view('tasks/create', [
+            'folder_id' => $id,
+            'folders_title' => $folders_title
         ]);
     }
 
     public function create(int $id, Request $request)
     {
+        //選択されたidを受け取る2
         $current_folder = Folder::find($id);
-
+        $folders = Task::with('folder')->get();
+        
         $task = new Task();
         $task ->title = $request->title_task;
         $task ->due_date = $request->due_date;
@@ -46,7 +65,10 @@ class TaskController extends Controller
         $task ->textarea = $request->textarea;
         $current_folder->tasks()->save($task);
 
-        return redirect()->route('tasks.index',['id'=>$current_folder->id]);
+        return redirect()->route('tasks.index',[
+            'id'=>$current_folder->id,
+            dd(compact('folders'))
+        ]);
     }
 
     public function showEditTask(int $id,int $task_id)

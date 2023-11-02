@@ -27,7 +27,7 @@
                                 <td>{{ $task->due_date }}</td>
                                 <td>
                                     <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">編集</a>
-                                    <a href="{{ route('tasks.destroy', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">フォルダを削除</a>
+                                    <a href="{{ route('tasks.destroy', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">タスクを削除</a>
                                 </td>
                             </tr>
                         @endforeach
