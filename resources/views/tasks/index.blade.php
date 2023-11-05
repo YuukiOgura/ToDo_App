@@ -16,7 +16,7 @@
                 </div>
                 <div class="">タスク</div>
 
-                <a href="{{ route('tasks.create', ['id' => $current_folder_id]) }}">タスクを追加</a>
+                <a href="{{ route('tasks.create', ['id' => $user]) }}">タスクを追加</a>
 
                 <div class="">
                     <table>

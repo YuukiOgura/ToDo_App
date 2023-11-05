@@ -6,7 +6,7 @@
             <nav>
                 <div class="">タスクを追加する</div>
                 <div class="">
-                    <form action="{{ route('tasks.create', ['id' => $folder_id]) }}" method="post">
+                    <form action="{{ route('tasks.create', $id) }}" method="post">
                         <!--
                                         routeはweb.phpの記載をURLの形に変化できるメソッドです。つまりは = コントローラーに情報を渡している。
                                         さらにはmethodを"post"に変更する事で情報の漏洩対策。
@@ -19,9 +19,9 @@
                                 create.blade.phpでフォルダの選択をする1
                             -->
                         <div class="">
-                            <select name="folders_title">
-                                @foreach ($folders_title as $title)
-                                    <option value = "{{ $title }}">{{ $title }}</option>
+                            <select name="folders_select" method = "post">
+                                @foreach ($folders as $folder)
+                                    <option value = "{{ $folder->id }}">{{ $folder ->title }}</option>
                                 @endforeach
                             </select>
                         </div>

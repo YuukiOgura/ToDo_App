@@ -30,5 +30,9 @@ class FolderController extends Controller
         $folder ->save();//認証済みユーザーに紐づけて保存する必要がある。
         
         return redirect()->route('tasks.index',['id'=>$folder->user_id]);
+        //リダイレクト先のURLはweb.phpに記載のあるURLを指定しています。その際、
+        //web.phpにある変数{id}に値を入れて、URLを作る必要がある。
+        //今回は認証済みユーザーのIDを入れています。
+        //これにより、routeメソッドでURLを作成し、そこにリダイレクトしています。
     }
 }
