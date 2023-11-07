@@ -25,9 +25,23 @@
                                 <!--Taskコントローラから渡ってきた値　as 仮変数-->
                                 <td>{{ $task->title }}</td><!--$foldersのtitleをforeachでまわして取り出す-->
                                 <td>{{ $task->due_date }}</td>
+                                 {{ $task->id }}
                                 <td>
-                                    <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">編集</a>
-                                    <a href="{{ route('tasks.destroy', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">タスクを削除</a>
+                                    @if($task->del_flug === 0)
+                                    <form action="{{ route('tasks.complete', ['id' => $id, 'task_id' => $task->id]) }}" 
+                                        method = "post">
+                                    @csrf
+                                    <button type = "submit"  name = 'del_flug' value = "{{ $task->id }}">完了</button>
+                                    </form>
+                                    @else
+                                    <div class="">完了しました</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('tasks.edit',['id' => $id, 'task_id' => $task->id]) }}">編集</a>
+                                    @if($task->del_flug === 1)
+                                    <a href="{{ route('tasks.destroy',['id' => $id, 'task_id' => $task->id]) }}">タスクを削除</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

@@ -34,22 +34,24 @@ Route::middleware('auth')->group(function () {
     //フォルダとタスクの表示機能
     Route::get('/folders/{id}/tasks', [TaskController::class, 'index'])->name('tasks.index');
     //get方式(URL,[コントローラー,呼ぶメソッド])->Routeに名前を付ける(この名前で呼び出しが可能)
-
     //フォルダの追加処理
     Route::get('/folders/create', [FolderController::class, 'showCreateFolder'])->name('folders.create');
     Route::post('/folders/create/', [FolderController::class, 'create']);
-
+    
     //タスクの追加処理
     Route::get('/folders/{id}/tasks/create', [TaskController::class, 'showCreateTask'])->name('tasks.create');
     Route::post('/folders/{id}/tasks/create', [TaskController::class, 'create']);
-
+    
     //タスクの編集処理
     Route::get('/folders/{id}/tasks/{task_id}/edit', [TaskController::class, 'showEditTask'])->name('tasks.edit');
     Route::post('/folders/{id}/tasks/{task_id}/edit', [TaskController::class, 'edit']);
-
+    
+    //タスクの完了処理
+    Route::post('/folders/{id}/tasks/{task_id}/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
+    
     //タスクの削除処理
     Route::get('/folders/{id}/tasks/{task_id}/destroy', [TaskController::class, 'showDestroyTask'])->name('tasks.destroy');
-    Route::post('/folders/{id}/tasks/{task_id}/destroy', [TaskController::class, 'destroy']);
+    Route::delete('/folders/{id}/tasks/{task_id}/destroy', [TaskController::class, 'destroy']);
 });
 
 require __DIR__ . '/auth.php';

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         //タイトル説明文登録のためのカラム追加
         Schema::table('tasks',function(Blueprint $table){
-            $table->string('textarea')->after('title');
+            $table->string('textarea',255)->after('title');
         });
     }
 

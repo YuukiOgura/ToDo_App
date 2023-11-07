@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('folder_id');
-            $table->string('title');
+            $table->string('title',20);
             $table->date('due_date');
             $table->integer('status')->default(1);
+            $table->boolean('del_flug')->default(false);
             $table->timestamps();
             $table->foreign('folder_id')->references('id')->on('folders');
         });

@@ -20,6 +20,7 @@ class TasksTableSeeder extends Seeder
                 'title' => "サンプルタスク{$num}",
                 'priority' => $num,
                 'due_date' => Carbon::now()->addDay($num),//Carbonで現在時刻を取得し、addDayで取得した日から$num日加算した日数を取得。
+                'del_flug' =>  0,
                 'textarea' => "サンプル",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

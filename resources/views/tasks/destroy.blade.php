@@ -7,9 +7,12 @@
                 <div class="">タスクを削除する
                 </div>
                 <div class="">
-                    <form action="{{route('tasks.destroy',['id'=>$task->folder_id,'task_id'=>$task->id])}}" method="post">
+                    <form action="{{route('tasks.destroy',['id' => $id, 'task_id' => $task_id])}}" method="post">
                         @csrf
+                        @method('delete')
+                        <input type="hidden" name="task_id" value="{{ $task_id }}">
                         <div class="">
+                            {{ $task_id }}
                         </div>
                         <div class="">
                             <button type='submit'>削除</button>
