@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\TaskCreateRequest;
 //use App\Models\User;
 use App\Models\Folder;
 use App\Models\Task;
@@ -38,7 +39,7 @@ class TaskController extends Controller
         return view('tasks.create', compact('id','folders'));
     }
 
-    public function create(int $id, Request $request)
+    public function create(int $id, TaskCreateRequest $request )
     {
         //$current_folder = Folder::find($id);
         
@@ -48,8 +49,11 @@ class TaskController extends Controller
         $task ->priority = $request->priority;
         $task ->textarea = $request->textarea;
         $task ->folder_id = $request->folders_select;
-        $task ->save();
-        
+        if ($task->save()) {
+            return redirect()->route('tasks.index', ['id' => $id]);
+        } else {
+            return back()->withInput();
+        }
         return redirect()->route('tasks.index',[
             'id'=>$id,
         ]);
@@ -57,10 +61,11 @@ class TaskController extends Controller
 
     public function showEditTask(int $id,int $task_id)
     {
+        $tasks= Task::find($task_id);
+        //dd($tasks);
         //$task = Task::find($task_id);
-        return view('tasks/edit',[
-            //'task'=>$task, 
-        ]);
+        return view('tasks.edit',
+            compact('id','task_id','tasks'));
     }
 
     public function edit(int $id, int $task_id, Request $request)
@@ -68,7 +73,9 @@ class TaskController extends Controller
         $task = Task::find($task_id);
 
         $task ->title = $request->title_edit;
+        $task ->textarea = $request->textarea_edit;
         $task ->due_date = $request->due_date_edit;
+        $task ->priority = $request->priority_edit;
 
         $task->save();
 
