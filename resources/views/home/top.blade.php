@@ -17,7 +17,7 @@
       </div>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
 
-        
+
         <form method="POST" action="{{ route('logout') }}" class="mr-5 hover:text-gray-900">
           @csrf
 
@@ -37,16 +37,18 @@
       <a href="{{ route('tasks.index', ['id' => $id]) }}">ToDo作成</a>
     </div> --}}
     <!-- Navigation Toggle -->
-    {{-- <button type="button" class="text-gray-500 hover:text-gray-600" data-hs-overlay="#docs-sidebar" aria-controls="docs-sidebar" aria-label="Toggle navigation">
-    <span class="sr-only">Toggle Navigation</span>
-    <svg class="flex-shrink-0 w-4 h-4" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-    </svg>
-  </button> --}}
+    {{-- <button type="button" class="text-gray-500 hover:text-gray-600" data-hs-overlay="#docs-sidebar"
+      aria-controls="docs-sidebar" aria-label="Toggle navigation">
+      <span class="sr-only">Toggle Navigation</span>
+      <svg class="flex-shrink-0 w-4 h-4" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+      </svg> 
+    </button>--}}
     <!-- End Navigation Toggle -->
 
     <div id="docs-sidebar"
-      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden {{-- fixed top-0 start-0 bottom-0  --}}z-[60] w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-gray-800 dark:border-gray-700">
+      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden  {{-- fixed --}} top-0 start-0 bottom-0  z-[60] w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-gray-800 dark:border-gray-700">
 
       <div class="px-6">
         <p class="flex-none text-xl font-semibold dark:text-white" href="" aria-label="Brand">メニュー</p>
@@ -88,8 +90,8 @@
               </svg>
               {{ $name }}
             </a>
-{{-- 
-            <div id="account-accordion"
+
+            {{-- <div id="account-accordion"
               class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
               <ul class="pt-2 ps-2">
                 <li>
@@ -135,7 +137,8 @@
 
               <svg
                 class="hs-accordion-active:hidden ms-auto block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
-                width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                width="16" height="16" viewBox="0 0 16 16" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
               </svg>
@@ -195,11 +198,41 @@
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
               </svg>
               Documentation
-            </a></li> --}}
+            </a></li>--}}
         </ul>
       </nav>
-    </div>
+    </div> 
   </main>
+  {{-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Navigation Toggle
+      const toggleButton = document.querySelector('[data-hs-overlay="#docs-sidebar"]');
+      const sidebar = document.getElementById('docs-sidebar');
+
+      toggleButton.addEventListener('click', function() {
+        sidebar.classList.toggle('hs-overlay-open:translate-x-0');
+        sidebar.classList.toggle('-translate-x-full');
+      });
+
+      // Accordion Menu
+      const accordionButtons = document.querySelectorAll('.hs-accordion-toggle');
+
+      accordionButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          const content = button.nextElementSibling;
+          content.classList.toggle('hidden');
+
+          if (content.classList.contains('hidden')) {
+            button.querySelector('.hs-accordion-active:block').classList.add('hidden');
+            button.querySelector('.hs-accordion-active:hidden').classList.remove('hidden');
+          } else {
+            button.querySelector('.hs-accordion-active:hidden').classList.add('hidden');
+            button.querySelector('.hs-accordion-active:block').classList.remove('hidden');
+          }
+        });
+      });
+    });
+  </script> --}}
 </body>
 
 </html>
