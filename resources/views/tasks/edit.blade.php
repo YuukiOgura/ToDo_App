@@ -13,16 +13,14 @@
 </head>
 
 <body>
-
-  <header>
-
-    <nav>
-      <a href="/">ToDo App</a>
-    </nav>
-
+  <header class="text-gray-600 body-font bg-blue-100">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+      <div class="">
+        <a href="/top">Topページ</a>
+      </div>
+    </div>
   </header>
   <main>
-
     <div class="">
       <div class="">
         <section class="text-gray-600 body-font relative">
@@ -70,20 +68,21 @@
                       <div class="p-2 w-full">
                         <div class="relative">
                           <label for="priority_edit" class="leading-7 text-sm text-gray-600">重要度を選択してください</label> <br>
-                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                          <div
+                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
 
                             <input type="radio" name ="priority_edit" value = "1"
                               {{ $tasks->priority == 1 ? 'checked' : '' }} id = "priority_edit1" class="mr-2">
                             <label for="priority_edit1" class="mr-4">重要</label>
-                            
+
                             <input type="radio" name ="priority_edit" value = "2"
                               {{ $tasks->priority == 2 ? 'checked' : '' }} id = "priority_edit2" class="mx-4">
                             <label for="priority_edit2" class="mr-4">普通</label>
-                            
+
                             <input type="radio" name ="priority_edit" value = "3"
                               {{ $tasks->priority == 3 ? 'checked' : '' }} id = "priority_edit3" class="ml-2">
                             <label for="priority_edit3">後回し</label>
-                            
+
                             {{-- 重要度 --}}
                           </div>
 
