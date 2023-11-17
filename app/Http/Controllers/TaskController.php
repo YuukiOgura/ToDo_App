@@ -30,7 +30,13 @@ class TaskController extends Controller
         ]);
     }
     
-    public function showCreateTask(int $id)
+    public function show(int $id){
+        $tasks =Task::find($id);
+        $id = Auth::id();
+        return view('tasks.show',compact('tasks','id'));
+    }
+
+    public function createTask(int $id)
     {
         $user = Auth::user();
         //$id = Auth::id();
@@ -59,7 +65,7 @@ class TaskController extends Controller
         ]);
     }
 
-    public function showEditTask(int $id,int $task_id)
+    public function editTask(int $id,int $task_id)
     {
         $tasks= Task::find($task_id);
         //dd($tasks);
@@ -95,9 +101,11 @@ class TaskController extends Controller
             }
         }
         $task_id = Task::find($taskId); */
+        $tasks = Task::find($task_id);
         return view('tasks/destroy',[
             'id'=>$id,
             'task_id'=>$task_id,
+            'tasks' => $tasks
         ]);
     }
     

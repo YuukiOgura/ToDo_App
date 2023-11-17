@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FolderController extends Controller
 {
-    public function showCreateFolder()
+    public function createFolder()
     {
         return view('folders/create');
         /*

@@ -30,7 +30,7 @@
                 タスク編集
               </h1>
               <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-                タスク作成のページになります。
+                タスク編集のページになります。
               </p>
 
               <form action="{{ route('tasks.edit', [$id, $task_id]) }}" method="post">
@@ -96,11 +96,15 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
               </form>
-
-
             </div>
           </div>
+        </section>
+      </div>
+    </div>
   </main>
 
   <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>

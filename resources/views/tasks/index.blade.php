@@ -74,7 +74,7 @@
       <div class="w-2/5">
         ここにカレンダーを追加する予定
       </div>
-      <div class="w-2/5 pt-7 px-6 bg-green-100 mx-auto text-center">
+      <div class="w-2/5 pt-7 px-6 bg-gray-50 mx-auto text-center">
         {{-- <div class="">フォルダ</div> --}}
         <div class="flex">
           <h3
@@ -134,7 +134,9 @@
                             <tr>
                               <td
                                 class="px-6 py-4 whitespace-nowrap text-sm mx-auto font-medium text-gray-800 dark:text-gray-200">
-                                {{ $task->title }}</td>
+                                <a href = "{{ route('tasks.show', [$task->id]) }}">{{ $task->title }}</a>
+                              </td>
+
                               <td class="px-6 py-4 whitespace-nowrap text-sm mx-auto text-gray-800 dark:text-gray-200">
                                 {{ $task->due_date }}</td>
                               <td class="px-6 py-4 whitespace-nowrap text-sm mx-auto text-gray-800 dark:text-gray-200">
