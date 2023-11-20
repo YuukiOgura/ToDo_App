@@ -42,6 +42,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/folders/create', [FolderController::class, 'createFolder'])->name('folders.create');
     Route::post('/folders/create/', [FolderController::class, 'create']);
     
+    //フォルダの削除機能
+    Route::get('/folders/destroy',[FolderController::class,'showDestroy'])->name('folders.destroy');
+    Route::delete('/folders/destroy',[FolderController::class,'destroy']);
+
     //タスクの追加処理
     Route::get('/folders/{id}/tasks/create', [TaskController::class, 'createTask'])->name('tasks.create');
     Route::post('/folders/{id}/tasks/create', [TaskController::class, 'create']);
