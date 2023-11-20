@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('folders', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned();
-
-            $table->foreign('user_id')->references('id')->on('users');
+        //タイトル説明文登録のためのカラム追加
+        Schema::table('tasks',function(Blueprint $table){
+            $table->string('textarea',255)->after('title');
         });
     }
 
@@ -23,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('folders', function (Blueprint $table) {
-            $table->dropForeign('folders_user_id_foreign');
-            $table->dropColumn('user_id');
+        //
+        Schema::table('tasks',function(Blueprint $table){
+            $table->dropColumn('textarea');
         });
     }
 };

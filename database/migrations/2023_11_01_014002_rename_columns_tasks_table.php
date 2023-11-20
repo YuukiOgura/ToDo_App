@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('folders', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('title',20);
-            $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+        Schema::table('tasks',function(Blueprint $table){
+            $table->renameColumn('status','priority');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('folders');
+        Schema::table('tasks',function(Blueprint $table){
+            $table->renameColumn('priority','status');
+        });
     }
 };
