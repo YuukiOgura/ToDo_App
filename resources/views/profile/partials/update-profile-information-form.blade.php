@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -47,6 +47,15 @@
             @endif
         </div>
 
+        <div class="">
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700">画像投稿</label>
+                <input type="file" name="image" id="image" class="mt-1" />
+            </div>
+            <div class="">
+                <img src = "{{isset(Auth::user()->profile_image_path) ? asset('storage/'.Auth::user()->profile_image_path) : asset('profile_image_path/no-image.png')}}" alt = "">
+            </div>
+        </div>
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
