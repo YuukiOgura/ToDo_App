@@ -8,8 +8,27 @@
   <title>ToDo App</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
   
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "",
+        },
+        locale: "ja",
+        events: '/get_events',
+      });
+      calendar.render();
+    });
+  </script>
+  {{--　本当は、app.jsで読み込めるようにしたかったが、解決出来ず、一時断念 --}}
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body>
@@ -72,16 +91,16 @@
       </div>
 
       <div class="w-2/5">
-        <div class=""  id='calendar' ></div>
+        <div class="" id='calendar'></div>
       </div>
-      
+
       <div class="w-2/5 pt-7 px-6 bg-gray-50 mx-auto text-center">
         {{-- <div class="">フォルダ</div> --}}
         <div class="flex">
           <h3
             class="first:mr-2 w-1/2 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100  hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
             <a href="{{ route('folders.create') }}" class="text-blue-800">フォルダを追加</a>
-            <a href="{{ route('folders.destroy')}}" class ="text-red-800">フォルダを削除</a>
+            <a href="{{ route('folders.destroy') }}" class ="text-red-800">フォルダを削除</a>
           </h3>
           {{-- <div class="">タスク</div> --}}
           <h3
@@ -130,7 +149,8 @@
                           @foreach ($tasks as $task)
                             @if ($folder->id == $task->folder_id && $task->priority === $priority)
                               <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                                <td
+                                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                                   <a href="{{ route('tasks.show', [$task->id]) }}">{{ $task->title }}</a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
@@ -147,11 +167,13 @@
                                     <div class="">完了しました</div>
                                   @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-800 dark:text-gray-200">
+                                <td
+                                  class="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-800 dark:text-gray-200">
                                   @if ($task->del_flug === 0)
                                     <a href="{{ route('tasks.edit', ['id' => $id, 'task_id' => $task->id]) }}">編集</a>
                                   @elseif ($task->del_flug === 1)
-                                    <a href="{{ route('tasks.destroy', ['id' => $id, 'task_id' => $task->id]) }}">タスクを削除</a>
+                                    <a
+                                      href="{{ route('tasks.destroy', ['id' => $id, 'task_id' => $task->id]) }}">タスクを削除</a>
                                   @endif
                                 </td>
                               </tr>
@@ -170,7 +192,7 @@
     </div>
     </div>
   </main>
-  
+
 </body>
 {{-- <div class="mt-3">
       @foreach ($folders as $folder)
