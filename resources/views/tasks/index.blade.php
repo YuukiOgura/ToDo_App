@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <link>
+  
 </head>
 
 <body>
@@ -72,8 +72,9 @@
       </div>
 
       <div class="w-2/5">
-        ここにカレンダーを追加する予定
+        <div class=""  id='calendar' ></div>
       </div>
+      
       <div class="w-2/5 pt-7 px-6 bg-gray-50 mx-auto text-center">
         {{-- <div class="">フォルダ</div> --}}
         <div class="flex">
@@ -169,7 +170,7 @@
     </div>
     </div>
   </main>
-
+  
 </body>
 {{-- <div class="mt-3">
       @foreach ($folders as $folder)
