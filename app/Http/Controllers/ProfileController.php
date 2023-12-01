@@ -59,7 +59,17 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        $folders = $user->folders;//リレーションシップの結果の取得→今回はテーブル自体の取得の為こちらを採用
+        //$folders = $user->folders();//リレーションシップのメソッドの取得→返されるのがクエリ形式のビルダー型、クエリの操作に使う。
+        foreach($folders as $folder){
+            $folder->tasks()->delete();
+        }
+        $user->folders()->delete();
 
+        if ($delete_profile_image = $request->user()->profile_image_path){
+            Storage::disk('public')->delete($delete_profile_image);
+        }
+        
         Auth::logout();
 
         $user->delete();

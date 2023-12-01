@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CalendarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,9 @@ Route::middleware('auth')->group(function () {
     //フォルダとタスクの表示機能
     Route::get('/folders/{id}/tasks', [TaskController::class, 'index'])->name('tasks.index');
     //get方式(URL,[コントローラー,呼ぶメソッド])->Routeに名前を付ける(この名前で呼び出しが可能)
+
+    //カレンダーの表示
+    Route::get('get_events', [CalendarController::class, 'getEvents']);
 
     //タスクの詳細表示機能
     Route::get('/folders/{id}/show',[TaskController::class,'show'])->name('tasks.show');

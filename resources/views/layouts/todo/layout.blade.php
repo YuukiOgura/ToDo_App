@@ -8,22 +8,22 @@
   <title>ToDo App</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+  @yield('script')
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  @yield('styles')
-  <link>
 </head>
 
 <body>
-  <header>
-    <nav>
-      <a href="/">ToDo App</a>
-    </nav>
+  <header class="text-gray-600 body-font bg-blue-100">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+      <div class="">
+        <a href="/top">Topページ</a>
+      </div>
+    </div>
   </header>
   <main>
-    @yield('content')
+    @yield('main')
   </main>
-  @yield('scripts')
-  
+  @yield('bottom_script')
 </body>
 
 </html>
