@@ -84,10 +84,10 @@ class TaskController extends Controller
     {
         $task = Task::find($task_id);
 
-        $task->title = $request->title_edit;
-        $task->textarea = $request->textarea_edit;
-        $task->due_date = $request->due_date_edit;
-        $task->priority = $request->priority_edit;
+        $task->title = $request->title;
+        $task->textarea = $request->textarea;
+        $task->due_date = $request->due_date;
+        $task->priority = $request->priority;
 
         $task->save();
 
