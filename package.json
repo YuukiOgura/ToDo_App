@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "deploy": "sail artisan migrate --force && sail artisan cache:clear && sail npm run build"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",

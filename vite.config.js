@@ -3,9 +3,9 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
     server: {
-         hmr: {
-             host: "localhost",
-         },
+        hmr: {
+            host: "localhost",
+        },
     },
     plugins: [
         laravel({
@@ -14,6 +14,10 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
+            //デプロイの為
+            build: {
+                outDir: '../public',
+            },
         }),
     ],
 });
