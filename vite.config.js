@@ -14,10 +14,6 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
-            //デプロイの為
-            build: {
-                outDir: '../public',
-            },
         }),
     ],
 });
