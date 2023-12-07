@@ -15,10 +15,23 @@ class Folder extends Model
     これによりコントローラーからテーブルの情報を取得する為のコードを読みやすい形に変える事が出来る。
     (情報を取得するだけならコントローラーからの記載だけで出来る)
     */
+    
+    
+    public static function boot(){
+        parent::boot();
+        static::deleting(function($folder){
+            $folder->tasks()->delete();
+        });
+    }
 
     public function tasks()
     {
-        return $this->hasMany('App\Models\Task');
+        return $this->hasMany(Task::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /* 

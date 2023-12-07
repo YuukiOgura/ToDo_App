@@ -3,81 +3,144 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Folder;
+use App\Http\Requests\TaskCreateRequest;
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
+
 {
-    public function index(int $id)//URLから渡ってきた引数
+    public function index()
     {
-        $folders = Folder::all();//Folderモデルの情報を全て取得
-        $current_folder = Folder::find($id);//プライマリーキーのレコードを1行取得(indexに渡ってきたURLの引数を元に取得)
-
-        $tasks = $current_folder->tasks()->get();//Folder::find($id)と同じfolder_idレコードを持つ値をTaskクラス通しタスクテーブルから取得する。 
-
-        return view('tasks/index',[//tasks.indexに値を渡す
-            'folders' => $folders,//Folderモデルの情報を渡す
-            'current_folder_id' => $current_folder->id,
-            //Folderモデル中にあるidを呼び出して渡す（Folder::find($id)ではレコード毎取ってきている為、idを指定）
-
-            'tasks'=>$tasks,
-        ]);
-    }
-    
-    public function showCreateTask(int $id)
-    {
-        return view('tasks/create',[
-            'folder_id'=>$id,//tasks/createにURLに入っているidを渡す。
+        //$user = Auth::user()->id;
+        //$folders = User::find($user)->folders;
+        $user = Auth::user();
+        $id = Auth::id();
+        $folders = $user->folders;
+        $foldersIds = $user->folders->pluck('id'); //認証ユーザーのfoldersテーブルのidを配列で取得
+        $tasks = Task::whereIn('folder_id', $foldersIds)->get(); //foldersテーブルのカラムfoloder_idのidを取得。
+        //$task_id = Task::whereIn('id',$foldersIds)->get();
+        return view('tasks/index', [
+            'folders' => $folders,
+            'user' => $user,
+            'tasks' => $tasks,
+            'id' => $id,
         ]);
     }
 
-    public function create(int $id, Request $request)
+    public function show(int $id)
     {
-        $current_folder = Folder::find($id);
+        $tasks = Task::find($id);
+        $id = Auth::id();
+        return view('tasks.show', compact('tasks', 'id'));
+    }
+
+    public function createTask(int $id)
+    {
+        $user = Auth::user();
+        //$id = Auth::id();
+        $folders = $user->folders;
+
+        $folder = Auth::user()->folders()->first();
+        if (!$folder || $folder->user_id === null) {
+            return back();
+        } else {
+            return view('tasks.create', compact('id', 'folders'));
+        }
+    }
+
+    public function create(int $id, TaskCreateRequest $request)
+    {
+        //$current_folder = Folder::find($id);
 
         $task = new Task();
-        $task ->title = $request->title_task;
-        $task ->due_date = $request->due_date;
-
-        $current_folder->tasks()->save($task);
-
-        return redirect()->route('tasks.index',['id'=>$current_folder->id]);
+        $task->title = $request->title_task;
+        $task->due_date = $request->due_date;
+        $task->priority = $request->priority;
+        $task->textarea = $request->textarea;
+        $task->folder_id = $request->folders_select;
+        if ($task->save()) {
+            return redirect()->route('tasks.index', ['id' => $id]);
+        } else {
+            return back()->withInput();
+        }
+        return redirect()->route('tasks.index', [
+            'id' => $id,
+        ]);
     }
 
-    public function showEditTask(int $id,int $task_id)
+    public function editTask(int $id, int $task_id)
     {
-        $task = Task::find($task_id);
-        return view('tasks/edit',[
-            'task'=>$task, 
-        ]);
+        $tasks = Task::find($task_id);
+        //dd($tasks);
+        //$task = Task::find($task_id);
+        return view(
+            'tasks.edit',
+            compact('id', 'task_id', 'tasks')
+        );
     }
 
     public function edit(int $id, int $task_id, Request $request)
     {
         $task = Task::find($task_id);
 
-        $task ->title = $request->title_edit;
-        $task ->due_date = $request->due_date_edit;
+        $task->title = $request->title;
+        $task->textarea = $request->textarea;
+        $task->due_date = $request->due_date;
+        $task->priority = $request->priority;
 
         $task->save();
 
-        return redirect()->route('tasks.index',['id'=>$task->folder_id]);
+        return redirect()->route('tasks.index', ['id' => $task->folder_id]);
     }
 
     public function showDestroyTask(int $id, int $task_id)
     {
-        $task = Task::find($task_id);
-        return view('tasks/destroy',[
-            'task'=>$task
+        /* $user = Auth::user();
+        $id = Auth::id();
+
+        $folders = $user->folders;
+        foreach ($folders as $folder) {
+            $tasks = $folder->tasks;
+            foreach ($tasks as $task) {
+                $taskId = $task->id;
+            }
+        }
+        $task_id = Task::find($taskId); */
+        $tasks = Task::find($task_id);
+        return view('tasks/destroy', [
+            'id' => $id,
+            'task_id' => $task_id,
+            'tasks' => $tasks
         ]);
     }
 
-    public function destroy(int $id, int $task_id, Request $request)
+
+    public function destroy(Request $request, int $id,/* int $task_id */)
     {
-        $task = Task::find($task_id);//レコードを1行取得
+        $task_id = $request->input('task_id');
+        $task = Task::where('id', (int)$task_id)->where('del_flug', 1)->first();
+        if ($task) {
+            $task->delete();
+        }
 
-        $task ->delete();
+        //$task ->delete();
 
-        return redirect()->route('tasks.index',['id'=>$task->folder_id]);
+        return redirect()->route('tasks.index', ['id' => $id]);
+    }
+
+    public function completeTask(Request $request)
+    {
+        $id = Auth::id();
+        $task = Task::find($request->del_flug);
+
+        if ($task) {
+            $task->del_flug = 1;
+            $task->save();
+        }
+        $del_flug_id = Task::where('folder_id', $task->id)
+            ->where('del_flug', 0) // ここでdel_flugが0（非表示でない）を指定
+            ->get();
+        return redirect()->route('tasks.index', ['id' => $id, 'del_flug_id' => $del_flug_id]);
     }
 }

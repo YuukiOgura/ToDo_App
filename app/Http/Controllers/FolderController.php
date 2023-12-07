@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Folder;
+use Illuminate\Support\Facades\Auth;
+
+use function PHPUnit\Framework\returnSelf;
 
 class FolderController extends Controller
 {
-    public function showCreateFolder()
+    public function createFolder()
     {
         return view('folders/create');
         /*
@@ -21,10 +24,34 @@ class FolderController extends Controller
 
     public function create(Request $request)
     {
+        $user = Auth::user();//認証済みユーザーの取得
+        
         $folder = new Folder();
         $folder -> title = $request->title;
-        $folder ->save();
+        $folder -> user_id= $user->id;
+        $folder ->save();//認証済みユーザーに紐づけて保存する必要がある。
         
-        return redirect()->route('tasks.index',['id'=>$folder->id]);
+        return redirect()->route('tasks.index',['id'=>$folder->user_id]);
+        //リダイレクト先のURLはweb.phpに記載のあるURLを指定しています。その際、
+        //web.phpにある変数{id}に値を入れて、URLを作る必要がある。
+        //今回は認証済みユーザーのIDを入れています。
+        //これにより、routeメソッドでURLを作成し、そこにリダイレクトしています。
+    }
+
+    public function showDestroy(){
+        $id = Auth::user()->id;
+        $folders = Auth::user()->folders;
+        return view('folders.destroy',compact('folders','id'));
+    }
+
+    public function destroy(Request $request){
+        $check_folder = $request->input('check_folder',[]);
+        foreach($check_folder as $folder_id){
+            Folder::find($folder_id)->tasks()->delete();
+        }
+        
+        Folder::whereIn('id',$check_folder)->delete();
+
+        return redirect()->back();
     }
 }
