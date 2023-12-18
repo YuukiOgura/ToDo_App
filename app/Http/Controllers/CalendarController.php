@@ -20,11 +20,25 @@ class CalendarController extends Controller
                         'description' => '',
                         'start' => $task_calendar->due_date,
                         'end'   => $task_calendar->due_date,
-                        'color' => 'red',   
+                        'color' => $this->getEventColor($task_calendar->priority),   
                 ];
             }
         }    
         return $events;
     }
     
+    private function getEventColor($colorCode)
+    {
+        switch ($colorCode) {
+            case 1:
+                return 'red';
+            case 2:
+                return 'blue';
+            case 3:
+                return 'green';
+            // 他の値に対する処理があればここに追加
+            default:
+                return 'red'; // デフォルトの色
+        }
+    }
 }
