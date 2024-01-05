@@ -50,15 +50,15 @@
                         <div
                           class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
 
-                          <input type="radio" name ="priority" value = "1"
+                          <input type="radio" name ="priority" value = 1
                             {{ $tasks->priority == 1 ? 'checked' : '' }} id = "priority1" class="mr-2">
                           <label for="priority1" class="mr-4">重要</label>
 
-                          <input type="radio" name ="priority" value = "2"
+                          <input type="radio" name ="priority" value = 2
                             {{ $tasks->priority == 2 ? 'checked' : '' }} id = "priority2" class="mx-4">
                           <label for="priority2" class="mr-4">普通</label>
 
-                          <input type="radio" name ="priority" value = "3"
+                          <input type="radio" name ="priority" value = 3
                             {{ $tasks->priority == 3 ? 'checked' : '' }} id = "priority3" class="ml-2">
                           <label for="priority3">後回し</label>
 

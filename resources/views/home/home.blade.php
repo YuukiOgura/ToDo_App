@@ -18,7 +18,7 @@
             @if (Route::has('login'))
                 <div class="">
                     @auth
-                        <a href="{{ route('top.index') }}" class="mr-5 hover:text-gray-900">ユーザー</a>
+                        <a href="{{ route('tasks.index') }}" class="mr-5 hover:text-gray-900">ユーザー</a>
                     @else
                         <a href="{{ route('login') }}" class="mr-5 hover:text-gray-900">
                             ログイン</a>

@@ -13,10 +13,10 @@ class HomeController extends Controller
         return view("home/home");
     }
 
-    public function indexTop()
+   /*  public function indexTop()
     {
         $name = Auth::user()->name;
         $id = Auth::id();
         return view("home/top",compact('name','id'));
-    }
+    } */
 }
