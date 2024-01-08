@@ -30,52 +30,46 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //ユーザートップページの表示
-    /* Route::get('/top', [HomeController::class,'indexTop'])->name('top.index'); */
-
-    //フォルダとタスクの表示機能
+    // フォルダとタスクの表示機能
     Route::get('/folders/tasks', [TaskController::class, 'index'])->name('tasks.index');
     //get方式(URL,[コントローラー,呼ぶメソッド])->Routeに名前を付ける(この名前で呼び出しが可能)
-
-    //カレンダーの表示
-    Route::get('get_events', [CalendarController::class, 'getEvents']);
-
-    //タスクの詳細表示機能
-    //Route::get('/folders/{id}/show',[TaskController::class,'show'])->name('tasks.show');
-    
-    //フォルダの追加処理
-    /* Route::get('/folders/create', [FolderController::class, 'create'])->name('folders.create'); */
+    // フォルダー追加機能
     Route::post('/folders/create/', [FolderController::class, 'store'])->name('folders.store');
-    
-    //フォルダの削除機能
-    //Route::get('/folders/destroy',[FolderController::class,'showDestroy'])->name('folders.destroy');
+    // フォルダー削除機能
     Route::delete('/folders/destroy',[FolderController::class,'destroy'])->name('folders.destroy');
-
-    //タスクの追加処理
-    //Route::get('/folders/{id}/tasks/create', [TaskController::class, 'createTask'])->name('tasks.create');
+    // タスク追加機能
     Route::post('/folders/{id}/tasks/create', [TaskController::class, 'store'])->name('tasks.store');
-    
-    //タスクの編集処理
-    //Route::get('/folders/{id}/tasks/{task_id}/edit', [TaskController::class, 'editTask'])->name('tasks.edit');
+    // タスク編集機能
     Route::post('/folders/{id}/tasks/edit', [TaskController::class, 'edit'])->name('tasks.edit');
-    
-    //タスクの完了処理
+    // タスク完了機能
     Route::post('/folders/tasks/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
-    
-    //タスクの削除処理
-    //Route::get('/folders/{id}/tasks/{task_id}/destroy', [TaskController::class, 'showDestroyTask'])->name('tasks.destroy');
+    // タスク削除機能
     Route::delete('/folders/tasks/{id}/destroy', [TaskController::class, 'destroy'])->name('tasks.destroy');
-
-    // レイアウト変更用（カレンダー）
-    Route::get('test2',[CalendarController::class, 'test2']);
-
     // カレンダー表示用
     Route::get('calendar',[CalendarController::class, 'index'])->name('calendar.index');
+    // カレンダー機能用ルーティング
+    Route::get('get_events', [CalendarController::class, 'getEvents']);
 });
 
-//チャット機能追加用
+//チャット機能追加学習用
 Route::get('/chat', function () {
     event(new MessageSent);
 });
 
 require __DIR__ . '/auth.php';
+
+/* 以下の記述は、レイアウト変更時に使わなくなったルーティング */
+//ユーザートップページの表示
+    /* Route::get('/top', [HomeController::class,'indexTop'])->name('top.index'); */
+//タスクの詳細表示機能
+    //Route::get('/folders/{id}/show',[TaskController::class,'show'])->name('tasks.show');
+//フォルダの追加処理
+    /* Route::get('/folders/create', [FolderController::class, 'create'])->name('folders.create'); */
+//フォルダの削除機能
+    //Route::get('/folders/destroy',[FolderController::class,'showDestroy'])->name('folders.destroy');
+//タスクの追加処理
+    //Route::get('/folders/{id}/tasks/create', [TaskController::class, 'createTask'])->name('tasks.create');
+//タスクの編集処理
+    //Route::get('/folders/{id}/tasks/{task_id}/edit', [TaskController::class, 'editTask'])->name('tasks.edit');
+//タスクの削除処理
+    //Route::get('/folders/{id}/tasks/{task_id}/destroy', [TaskController::class, 'showDestroyTask'])->name('tasks.destroy');

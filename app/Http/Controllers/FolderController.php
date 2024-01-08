@@ -11,17 +11,6 @@ use function PHPUnit\Framework\returnSelf;
 
 class FolderController extends Controller
 {
-    public function create()
-    {
-        /* return view('folders/create'); */
-        /*
-        viewヘルパーで表示を行う。
-        あくまでfolders/createの情報をレスポンスとして返している。
-        実際に表示しているのはレスポンスを受け取ったviewヘルパーというLaravelの機能です。
-        その為、変数等をviewで返しても、viewヘルパーが受け取り、その変数の処理を行い表示してくれる。
-        その機能の事を"レンダリング"という。
-        */
-    }
 
     public function store(FolderCreateRequest $request)
     {
@@ -46,15 +35,6 @@ class FolderController extends Controller
         */
     }
 
-    public function showDestroy()
-    {
-        // 認証済みユーザーのIDを取得
-        $id = Auth::id();
-        // リレーションにて、紐づいているfoldersテーブルの情報を取得する。
-        $folders = Auth::user()->folders;
-        // ページを表示し、値を渡す
-        return view('folders.destroy', compact('folders', 'id'));
-    }
 
     public function destroy(Request $request)
     {
@@ -70,3 +50,27 @@ class FolderController extends Controller
         return redirect()->route('tasks.index');
     }
 }
+
+/* 
+レイアウトの修正に伴い使わなくなった記述
+public function showDestroy()
+    {
+        // 認証済みユーザーのIDを取得
+        $id = Auth::id();
+        // リレーションにて、紐づいているfoldersテーブルの情報を取得する。
+        $folders = Auth::user()->folders;
+        // ページを表示し、値を渡す
+        return view('folders.destroy', compact('folders', 'id'));
+    }
+public function create()
+    {
+         return view('folders/create'); 
+        
+        viewヘルパーで表示を行う。
+        あくまでfolders/createの情報をレスポンスとして返している。
+        実際に表示しているのはレスポンスを受け取ったviewヘルパーというLaravelの機能です。
+        その為、変数等をviewで返しても、viewヘルパーが受け取り、その変数の処理を行い表示してくれる。
+        その機能の事を"レンダリング"という。
+        
+    }  
+*/
