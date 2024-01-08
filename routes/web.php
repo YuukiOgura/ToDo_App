@@ -5,6 +5,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalendarController;
+use App\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,5 +73,9 @@ Route::middleware('auth')->group(function () {
     Route::get('calendar',[CalendarController::class, 'index'])->name('calendar.index');
 });
 
+//チャット機能追加用
+Route::get('/chat', function () {
+    event(new MessageSent);
+});
 
 require __DIR__ . '/auth.php';
