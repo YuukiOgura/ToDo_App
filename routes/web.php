@@ -6,6 +6,7 @@ use App\Http\Controllers\FolderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalendarController;
 use App\Events\MessageSent;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[HomeController::class,'index'])->name('home.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
     // フォルダー追加機能
     Route::post('/folders/create/', [FolderController::class, 'store'])->name('folders.store');
     // フォルダー削除機能
-    Route::delete('/folders/destroy',[FolderController::class,'destroy'])->name('folders.destroy');
+    Route::delete('/folders/destroy', [FolderController::class, 'destroy'])->name('folders.destroy');
     // タスク追加機能
     Route::post('/folders/{id}/tasks/create', [TaskController::class, 'store'])->name('tasks.store');
     // タスク編集機能
@@ -46,15 +47,14 @@ Route::middleware('auth')->group(function () {
     // タスク削除機能
     Route::delete('/folders/tasks/{id}/destroy', [TaskController::class, 'destroy'])->name('tasks.destroy');
     // カレンダー表示用
-    Route::get('calendar',[CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
     // カレンダー機能用ルーティング
     Route::get('get_events', [CalendarController::class, 'getEvents']);
+    // メッセージ送信用。
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat');
+    Route::post('/chat', [ChatController::class, 'sendMessage']);
 });
 
-//チャット機能追加学習用
-Route::get('/chat', function () {
-    event(new MessageSent);
-});
 
 require __DIR__ . '/auth.php';
 

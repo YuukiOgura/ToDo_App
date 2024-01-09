@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Library\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,12 +15,14 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $message;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct( Message $message)
     {
         //
+        $this->message = $message;
     }
 
     /**
@@ -30,7 +33,8 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('ToDo_Portfolio'),
+            //new Channel('ToDo_Portfolio'),
+            new PrivateChannel('ToDo_Portfolio')
         ];
     }
 }
