@@ -55,6 +55,10 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Task::class, Folder::class);
     }
+    public function chatRecipients()
+    {
+        return $this->hasMany(ChatRecipient::class);
+    }
 
     public function sendPasswordResetNotification($token): void
     {

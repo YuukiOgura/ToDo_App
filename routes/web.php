@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalendarController;
 use App\Events\MessageSent;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatlayoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,9 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
     // カレンダー機能用ルーティング
     Route::get('get_events', [CalendarController::class, 'getEvents']);
-    // メッセージ送信用。
-    Route::get('/chat', [ChatController::class, 'index'])->name('chat');
-    Route::post('/chat', [ChatController::class, 'sendMessage']);
+    // チャット表示用
+    Route::get('/chat', [ChatlayoutController::class, 'index'])->name('chat');
+    // 個別チャット画面用
+    Route::get('/chat/{id}', [ChatlayoutController::class, 'layout'])->name('chat.layout');
+    // メッセージ送信用
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 });
 
 
