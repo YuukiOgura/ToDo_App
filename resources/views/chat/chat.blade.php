@@ -62,7 +62,6 @@
   </main>
 
   <script>
-    // 値の送信と取得
     function onsubmit_Form(event, otherId) {
       event.preventDefault();
       var messageInput = document.getElementById('input_message_' + otherId);
@@ -93,10 +92,9 @@
 
       messageInput.value = '';
     }
-    
-    // Pusherからの受信
+
     window.addEventListener("DOMContentLoaded", () => {
-      const messageDisplay = document.getElementById("message-display-{{ $other->id }}");
+      const messageDisplay = document.getElementById("message-display-{{ $other->id }}"); // 変更点：messageDisplayの定義
       window.Echo.private('ToDo_Portfolio.{{ Auth::id() }}')
         .listen('MessageSent', (e) => {
           console.log(e);
@@ -106,6 +104,7 @@
         });
     });
   </script>
+
 </body>
 
 </html>
@@ -199,5 +198,5 @@
             }
           })
       }) */
-  
+ 
  --}}
