@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Library\Message;
+// use App\Library\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,16 +15,21 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    //public $user;
     public $message;
-    protected $privateChannel;
+    public $otherUserId;
     /**
      * Create a new event instance.
+     *
+     * @param $user       // メッセージを送信したユーザー
+     * @param $message    // 送信されたメッセージ
+     * @param $otherUserId // メッセージの受信者のユーザーID
      */
-    public function __construct( Message $message ,$privateChannel)
+    public function __construct($user, $message, $otherUserId)
     {
-        //
+        //$this->user = $user;
         $this->message = $message;
-        $this->privateChannel = $privateChannel;
+        $this->otherUserId = $otherUserId;
     }
 
     /**
@@ -32,10 +37,21 @@ class MessageSent implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
+
     public function broadcastOn(): array
     {
+        $channelName = 'ToDo_Portfolio.' . $this->otherUserId;
+/* 
+        // 自分のユーザーIDと受信者のユーザーIDが一致する場合、チャンネル名を変更して自分も受信できるようにする
+        if ($this->user->id === $this->otherUserId) {
+            $channelName .= '.' . $this->user->id;
+        } */
+
         return [
-            new PrivateChannel( $this->privateChannel)
+            new PrivateChannel($channelName)
         ];
     }
+    /*  return [
+            new PrivateChannel( 'ToDo_Portfolio.'.$this->otherUserId)
+        ]; */
 }

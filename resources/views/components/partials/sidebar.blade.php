@@ -34,8 +34,8 @@
 
         <div id="account-accordion"
           class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-          <ul class="pt-2 ps-2">
-            @foreach($otherUsers as $other )
+          {{-- <ul class="pt-2 ps-2">
+            @foreach ($otherUsers as $other)
             <li>
               <a class="user-link flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                 href="#" 
@@ -45,7 +45,22 @@
               </a>
             </li>
             @endforeach
-          </ul>
+          </ul> --}}
+          <div class="flex flex-wrap">
+            <div class="border-e border-gray-200 dark:border-gray-700">
+              <nav class="flex flex-col space-y-2" aria-label="Tabs" role="tablist" data-hs-tabs-vertical="true">
+                @foreach ($otherUsers as $other)
+                  <button type="button"
+                    class="py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:text-blue-500 active"
+                    id="vertical-tab-with-border-item-{{ $other->id }}"
+                    data-hs-tab="#vertical-tab-with-border-{{ $other->id }}"
+                    aria-controls="vertical-tab-with-border-{{ $other->id }}" role="tab">
+                    {{ $other->name }}
+                  </button>
+                @endforeach
+              </nav>
+            </div>
+          </div>
         </div>
       </li>
     </ul>

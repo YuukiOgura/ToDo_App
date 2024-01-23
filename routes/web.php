@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
     // チャット表示用
     Route::get('/chat', [ChatlayoutController::class, 'index'])->name('chat');
     // 個別チャット画面用
-    Route::get('/chat/{id}', [ChatlayoutController::class, 'layout'])->name('chat.layout');
+    //Route::get('/chat/{id}', [ChatlayoutController::class, 'layout'])->name('chat.layout');
     // メッセージ送信用
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 });

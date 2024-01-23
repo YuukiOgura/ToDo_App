@@ -35,24 +35,25 @@ class ChatController extends Controller
     {
         // 認証済みユーザーの取得
         $user = Auth::user();
-        $user_id = Auth::id();
-        $strUsername = $user->name;
+        // $user_id = Auth::id();
+        // $strUsername = $user->name;
         // リクエストからデータの取り出し
         $strMessage = $request->input('message');
+        $otherUserId = $request->input('other_id');
         // 受信者のユーザーID
-        $recipientId = $request->recipientId;
+        // $recipientId = $request->recipientId;
         // ユーザーごとにPrivateChannelの作成
-        $privateChannel = 'ToDo_Portfolio.' . $user_id; 
+        // $privateChannel = 'ToDo_Portfolio.' . $user_id; 
 
 
         // Messageオブジェクトのインスタンス化
         $message = new Message;
-        $message->username = $strUsername;
-        $message->body = $strMessage;
+        //$message->username = $strUsername;
+        $message->body = $strMessage; 
 
         // 送信者を含めてメッセージを送信
         // dispatchメソッドは非同期処理のイベントを発火させるために使用します。
-        MessageSent::dispatch($message,$privateChannel);
+        MessageSent::dispatch($user,$message,$otherUserId);
 
         /* 送信者を除いてメッセージを送信 
         use Illuminage\Broadcasting\InteractsWithSockets
@@ -62,7 +63,7 @@ class ChatController extends Controller
 
         // DBにメッセージを保存。
 
-        $chat = new Chat();
+        /* $chat = new Chat();
         $chat->message = $request->input('message');
         $chat->user_id = $user_id;
         $chat->save();
@@ -70,7 +71,7 @@ class ChatController extends Controller
         $chatRecipients = new ChatRecipient();
         $chatRecipients->user_id = $user_id;
         $chatRecipients->chat_id = $chat->id;
-        $chatRecipients->save();
+        $chatRecipients->save(); */
 
         return $request;
     }
