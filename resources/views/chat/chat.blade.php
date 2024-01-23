@@ -44,7 +44,10 @@
                   <p class="text-gray-500 dark:text-gray-400">
                     これは<em class="font-semibold text-gray-800 dark:text-gray-200">{{ $other->name }}</em>アイテムのタブボディです。
                   </p>
+                  送信側メッセージ
                   <div id="message-display-{{ $other->id }}" class="message-display"></div>
+                  受信側メッセージ
+                  <div id= "other-display" class=""></div>
                   <form method="post" action="{{ route('chat.send') }}"
                     onsubmit="onsubmit_Form(event, {{ $other->id }});">
                     @csrf
@@ -94,7 +97,7 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      const messageDisplay = document.getElementById("message-display-{{ $other->id }}"); // 変更点：messageDisplayの定義
+      const messageDisplay = document.getElementById("other-display"); // 変更点：messageDisplayの定義
       window.Echo.private('ToDo_Portfolio.{{ Auth::id() }}')
         .listen('MessageSent', (e) => {
           console.log(e);
