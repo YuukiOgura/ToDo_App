@@ -47,7 +47,7 @@
                   送信側メッセージ
                   <div id="message-display-{{ $other->id }}" class="message-display"></div>
                   受信側メッセージ
-                  <div id= "other-display" class=""></div>
+                  <div id="other-display-{{ $other->id }}" class="other-display"></div>
                   <form method="post" action="{{ route('chat.send') }}"
                     onsubmit="onsubmit_Form(event, {{ $other->id }});">
                     @csrf
@@ -97,109 +97,24 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      const messageDisplay = document.getElementById("other-display"); // 変更点：messageDisplayの定義
+    @foreach ($otherUsers as $other)
+      const messageDisplay_{{ $other->id }} = document.getElementById("other-display-{{ $other->id }}");
+
       window.Echo.private('ToDo_Portfolio.{{ Auth::id() }}')
         .listen('MessageSent', (e) => {
           console.log(e);
-          var receivedMessage = document.createElement('div');
-          receivedMessage.textContent = e.message.body;
-          messageDisplay.appendChild(receivedMessage);
+
+          // Check if the received message is from the correct sender
+          if (e.message.sender_id === {{ $other->id }}) {
+            var receivedMessage = document.createElement('div');
+            receivedMessage.textContent = e.message.body;
+            messageDisplay_{{ $other->id }}.appendChild(receivedMessage);
+          }
         });
-    });
+    @endforeach
+  });
   </script>
 
 </body>
 
 </html>
-
-
-{{--    // ユーザーごとのページ切り替え処理。
-    /*  function loadContent(url) {
-       var xhr = new XMLHttpRequest();
-
-       xhr.onreadystatechange = function() {
-         if (xhr.readyState == 4) {
-           if (xhr.status == 200) {
-             // 成功時の処理
-             // ControllerからJSONデータを受け取る。
-             var responseData = JSON.parse(xhr.responseText);
-             //HTMLとして、データを出力する。
-             document.getElementById('content').innerHTML = responseData.data;
-           } else {
-             // エラー時の処理
-             alert('エラーです');
-           }
-         }
-       };
-
-       // Ajaxリクエストを実行
-       xhr.open('GET', url, true);
-       xhr.send();
-     } */
-
-    // 非同期で、コントローラーに値を渡す処理。
-    /* const elementInputMessage = document.getElementById("input_message");
-    let recipientId = null; */
-
-    // ユーザーのリンクをクリックしたときの処理。
-    /* document.querySelectorAll('.user-link').forEach(link => {
-      link.addEventListener('click', function(event) {
-        recipientId = this.getAttribute('data-id')
-      });
-    }); */
-
-    /* formのsubmitの処理 */
-    //function onsubmit_Form() {
-    /* 送信用HTMLからInput要素の取得 */
-    /* let strMessage = elementInputMessage.value;
-          if (!strMessage || !recipientId) {
-            return;
-          }
-          params = {
-            'recipientId': recipientId,
-            'message': strMessage
-          };
-     */
-    /* Postリクエスト送信処理とレスポンスの取得処理 */
-    /* axios
-      .post('/chat/send', params)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error.response);
-      }) */
-    /* テキストHTML要素の中身をクリア */
-    /*  elementInputMessage.value = "";
-          recipientId = null;
-        } */
-
-    /* ページ読み込み後の処理 */
-    /*  window.addEventListener("DOMContentLoaded", () => {
-       const elementListMessage = document.getElementById("list_message");
-       window.Echo.private( `ToDo_Portfolio.${recipientId}`'ToDo_Portfolio.{{ Auth::id() }}')
-         .listen('MessageSent', (e) => {
-           console.log(e); */
-    /* メッセージの整形 */
-    /* let strUsername = e.message.username;
-    let strMessage = e.message.body;
-
-    appendMessageList(strUsername, strMessage); */
-
-    /* メッセージをメッセージリストに追加 */
-    /* function appendMessageList(username, message) {
-
-              let elementLi = document.createElement("li");
-              let elementUsername = document.createElement("strong");
-              let elementMessage = document.createElement("div");
-
-              elementUsername.textContent = username;
-              elementMessage.textContent = message;
-              elementLi.append(elementUsername);
-              elementLi.append(elementMessage);
-              elementListMessage.appendChild(elementLi);
-            }
-          })
-      }) */
- 
- --}}
