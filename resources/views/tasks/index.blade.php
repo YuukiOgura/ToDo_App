@@ -1,191 +1,170 @@
-@extends('layouts/todo/layout')
-@section('script')
-@include('layouts/todo/fullcalendar')
-@endsection
+<!DOCTYPE html>
+<html lang="ja">
 
-@section('main')
-  <div class="flex">
-    @include('layouts/todo/sidebar')
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <title>ToDo</title>
+</head>
 
-    <div class="w-2/5">
-      <div class="" id='calendar'></div>
-    </div>
+<body style ="overflow-y: scroll">
 
-    <div class="w-2/5 pt-7 px-6 bg-gray-50 mx-auto text-center">
-      {{-- <div class="">フォルダ</div> --}}
-      <div class="flex">
-        <h3
-          class="first:mr-2 w-1/2 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100  hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-          <a href="{{ route('folders.create') }}" class="text-blue-800">フォルダを追加</a>
-          <a href="{{ route('folders.destroy') }}" class ="text-red-800">フォルダを削除</a>
-        </h3>
-        {{-- <div class="">タスク</div> --}}
-        <h3
-          class="last:ml-2 w-1/2 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-          <a href="{{ route('tasks.create', ['id' => $user]) }}">タスクを追加</a>
-        </h3>
+  <!-- Header -->
+  @include('components/partials/header')
+
+  <!-- Nav -->
+  <nav class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative flex flex-row justify-between items-center gap-x-8 border-t py-4 sm:py-0 dark:border-slate-700">
+      <div class="flex items-center w-full sm:w-[auto]">
+        <span
+          class="font-semibold whitespace-nowrap text-gray-800 border-e border-e-white/[.7] sm:border-transparent pe-4 me-4 sm:py-3.5 dark:text-white">
+          ToDo</span>
       </div>
-      <nav
-        class="pb-1 flex space-x-1 overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500"
-        aria-label="Tabs" role="tablist">
-        @foreach ($folders as $folder)
-          <button type="button"
-            class="{{-- hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 --}} py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:text-blue-500 active"
-            id="horizontal-scroll-tab-item-{{ $folder->id }}" data-hs-tab="#horizontal-scroll-tab-{{ $folder->id }}"
-            aria-controls="horizontal-scroll-tab-{{ $folder->id }}" role="tab">
-            {{ $folder->title }}
-          </button>
-        @endforeach
-      </nav>
-      <div class="flex flex-col">
-        <div class="-m-1.5 overflow-x-auto">
-          <div class="p-1.5 w-full inline-block align-middle">
-            @foreach ($folders as $folder)
-              <div id="horizontal-scroll-tab-{{ $folder->id }}" role="tabpanel"
-                aria-labelledby="horizontal-scroll-tab-item-{{ $folder->id }}"
-                {{ $folder->id >= 2 ? 'class=hidden' : '' }}>
-                <div class="border rounded-lg overflow-hidden dark:border-gray-700">
-                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="fixed-width-thead">
-                      <tr>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">タイトル</th>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">期限</th>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">完了</th>
-                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">アクション</th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                      @foreach ([1 => '重要', 2 => '普通', 3 => '後回し'] as $priority => $label)
-                        <tr>
-                          <td colspan="4"
-                            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                            {{ $label }}
-                          </td>
-                        </tr>
-                        @foreach ($tasks as $task)
-                          @if ($folder->id == $task->folder_id && $task->priority === $priority)
-                            <tr>
-                              <td
-                                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                                <a href="{{ route('tasks.show', [$task->id]) }}">{{ $task->title }}</a>
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                {{ $task->due_date }}
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                @if ($task->del_flug === 0)
-                                  <form action="{{ route('tasks.complete', ['id' => $id, 'task_id' => $task->id]) }}"
-                                    method="post">
-                                    @csrf
-                                    <button type="submit" name='del_flug' value="{{ $task->id }}">完了</button>
-                                  </form>
-                                @else
-                                  <div class="">完了しました</div>
-                                @endif
-                              </td>
-                              <td
-                                class="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-800 dark:text-gray-200">
-                                @if ($task->del_flug === 0)
-                                  <a href="{{ route('tasks.edit', ['id' => $id, 'task_id' => $task->id]) }}">編集</a>
-                                @elseif ($task->del_flug === 1)
-                                  <a
-                                    href="{{ route('tasks.destroy', ['id' => $id, 'task_id' => $task->id]) }}">タスクを削除</a>
-                                @endif
-                              </td>
-                            </tr>
-                          @endif
-                        @endforeach
-                      @endforeach
-                    </tbody>
-                  </table>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="flex flex-col max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="-m-1.5 overflow-x-auto">
+        <div class="p-1.5 min-w-full inline-block align-middle">
+          <div class="border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
+
+            <div class="py-3 px-4 flex justify-between">
+
+              <div class="flex">
+                {{-- フォルダー追加モーダル --}}
+                <div class="">
+                  @include('components/todos/folder_create_modal')
                 </div>
+
+                {{-- フォルダー削除モーダル --}}
+                @if ($folderFirst)
+                  <div class="ml-4">
+                    @include('components/todos/folder_delete_modal')
+                  </div>
+                @endif
               </div>
-            @endforeach
+
+            </div>
+
+            {{-- ページネーション --}}
+            <div class="py-1 px-4">
+              <nav class="flex items-center space-x-1 justify-between" aria-label="Tabs" role="tablist">
+
+                <nav
+                  class="pb-1 flex space-x-1 overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500"
+                  aria-label="Tabs" role="tablist">
+                  {{-- 
+                  下記のforeachは、TailwindCSSの記述を使って疑似的なSPAを作るためのページネーションの記述です。
+                  --}}
+                  @foreach ($folders as $folder)
+                    <button type=button
+                      class="focus:text-blue-600 min-w-[40px] flex justify-center items-center text-gray-800 hover:bg-gray-100 py-2.5 text-sm rounded-full disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 active"
+                      aria-current="page" id="horizontal-scroll-tab-item-{{ $folder->id }}"
+                      data-hs-tab="#horizontal-scroll-tab-{{ $folder->id }}"
+                      aria-controls="horizontal-scroll-tab-{{ $folder->id }}" role="tab">
+                      {{ $folder->title }}
+                    </button>
+                  @endforeach
+                </nav>
+
+                {{-- タスクの作成モーダル --}}
+                @if ($folderFirst)
+                  @include('components/todos/task_create_modal')
+                @endif
+
+              </nav>
+            </div>
+
+            {{-- テーブル --}}
+            <div class="overflow-hidden">
+              {{--
+                下記のforeachは、上部のページネーションの記載を用いて連動するテーブル作成に必要な記述です。 
+              --}}
+              @foreach ($folders as $folder)
+                <div id="horizontal-scroll-tab-{{ $folder->id }}" role="tabpanel"
+                  aria-labelledby="horizontal-scroll-tab-item-{{ $folder->id }}"
+                  {{ $folder->id >= 2 ? 'class=hidden' : '' }}>
+
+                  <div class="border rounded-lg overflow-hidden dark:border-gray-700">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                      <thead class="">
+                        <tr class = "">
+                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">タイトル</td>
+                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">期限</td>
+                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">完了</td>
+                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">アクション</td>
+                        </tr>
+                      </thead>
+
+                      <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+
+                        @foreach ($prioritys as $priority)
+                          <tr class="">
+                            <td class="px-6 py-1 text-sm font-medium text-gray-500 uppercase text-center">
+                              <div class = "{{-- py-2 border rounded-lg overflow-hidden --}}">
+                                {{ $priority }}
+                              </div>
+                            </td>
+                          </tr>
+                          {{-- 
+                          下記のforeachは、親foldersと子tasksの外部制約キーが同値かつ、
+                          カラム値が同値の場合に表示する様に記載しています。
+                          これにより、[重要、普通、後回し]毎に表示分けしています。 
+                          --}}
+                          @foreach ($tasks as $task)
+                            @if ($folder->id == $task->folder_id && $task->priority === $priority)
+                              <tr>
+
+                                <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                  @include('components/todos/task_show_modal')
+                                </td>
+
+                                <td class="w-1/4 px-6 py-1 text-s font-medium text-gray-500 uppercase text-center">
+                                  {{ $task->due_date }}
+                                </td>
+
+                                <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                  @if ($task->del_flug === 0)
+                                    <form action="{{ route('tasks.complete') }}" method="post">
+                                      @csrf
+                                      <button type="submit" name='del_flug' value="{{ $task->id }}"
+                                        class = "py-1 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-yellow-300 text-white hover:bg-yellow-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                        完了
+                                      </button>
+                                    </form>
+                                  @else
+                                    <div class="">完了しました</div>
+                                  @endif
+                                </td>
+
+                                <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                  @if ($task->del_flug === 0)
+                                    @include('components/todos/task_edit_modal')
+                                    {{-- <a href="{{ route('tasks.edit', ['id' => $id, 'task_id' => $task->id]) }}">編集</a> --}}
+                                  @elseif ($task->del_flug === 1)
+                                    @include('components/todos/task_delete_modal')
+                                  @endif
+                                </td>
+
+                              </tr>
+                            @endif
+                          @endforeach
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              @endforeach
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-@endsection
-{{-- <div class="mt-3">
-      @foreach ($folders as $folder)
-        <div id="horizontal-scroll-tab-{{ $folder->id }}" role="tabpanel"
-          aria-labelledby="horizontal-scroll-tab-item-{{ $folder->id }}"
-          @if ($folder->id >= 2) class="hidden" @endif>
-          @foreach ($tasks as $task)
-            @if ($folder->id == $task->folder_id)
-              <table>
-                <tr>
-                  <td>{{ $task->title }}</td>
-                  <td>{{ $task->due_date }}</td>
-                  <td>
-                    @if ($task->del_flug === 0)
-                      <form action="{{ route('tasks.complete', ['id' => $id, 'task_id' => $task->id]) }}"
-                        method = "post">
-                        @csrf
-                        <button type = "submit" name = 'del_flug' value = "{{ $task->id }}">完了</button>
-                      </form>
-                    @else
-                      <div class="">完了しました</div>
-                    @endif
-                  </td>
-                  <td>
-                    <a href="{{ route('tasks.edit', ['id' => $id, 'task_id' => $task->id]) }}">編集</a>
-                    @if ($task->del_flug === 1)
-                      <a href="{{ route('tasks.destroy', ['id' => $id, 'task_id' => $task->id]) }}">タスクを削除</a>
-                    @endif
-                  </td>
-                </tr>
-              </table>
-            @endif
-          @endforeach
-        </div>
-      @endforeach
-    </div> --}}
+  </main>
+</body>
 
-{{-- <div class="">
-        <nav>
-          <div class="">フォルダ</div>
-          <a href="{{ route('folders.create') }}">フォルダを追加</a>
-          <div class="">
-            @foreach ($folders as $folder)
-              <!--Taskコントローラから渡ってきた値　as 仮変数-->
-
-              {{ $folder->title }}<!--$foldersのtitleをforeachでまわして取り出す-->
-            @endforeach
-          </div>
-          <div class="">タスク</div>
-
-          <a href="{{ route('tasks.create', ['id' => $user]) }}">タスクを追加</a>
-
-          <div class="">
-            <table>
-              @foreach ($tasks as $task)
-                <tr>
-                  <!--Taskコントローラから渡ってきた値　as 仮変数-->
-                  <td>{{ $task->title }}</td><!--$foldersのtitleをforeachでまわして取り出す-->
-                  <td>{{ $task->due_date }}</td>
-                  {{ $task->id }}
-                  <td>
-                    @if ($task->del_flug === 0)
-                      <form action="{{ route('tasks.complete', ['id' => $id, 'task_id' => $task->id]) }}"
-                        method = "post">
-                        @csrf
-                        <button type = "submit" name = 'del_flug' value = "{{ $task->id }}">完了</button>
-                      </form>
-                    @else
-                      <div class="">完了しました</div>
-                    @endif
-                  </td>
-                  <td>
-                    <a href="{{ route('tasks.edit', ['id' => $id, 'task_id' => $task->id]) }}">編集</a>
-                    @if ($task->del_flug === 1)
-                      <a href="{{ route('tasks.destroy', ['id' => $id, 'task_id' => $task->id]) }}">タスクを削除</a>
-                    @endif
-                  </td>
-                </tr>
-              @endforeach
-            </table>
-          </div>
-        </nav>
-      </div> --}}
+</html>

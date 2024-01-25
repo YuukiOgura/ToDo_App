@@ -26,6 +26,8 @@
         "@preline/tabs": "^2.0.0",
         "@preline/tooltip": "^2.0.0",
         "fullcalendar": "^6.1.9",
-        "preline": "^2.0.0"
+        "laravel-echo": "^1.15.3",
+        "preline": "^2.0.0",
+        "pusher-js": "^8.4.0-rc2"
     }
 }
