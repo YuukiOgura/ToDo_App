@@ -39,16 +39,16 @@ class ChatController extends Controller
         // $strUsername = $user->name;
         // リクエストからデータの取り出し
         $strMessage = $request->input('message');
-        $otherUserId = $request->input('other_id');
         // 受信者のユーザーID
-        // $recipientId = $request->recipientId;
-        // ユーザーごとにPrivateChannelの作成
-        // $privateChannel = 'ToDo_Portfolio.' . $user_id; 
+        $otherUserId = $request->input('other_id');
+        // 送信者ID
+        $sender_id = Auth::id();
 
 
         // Messageオブジェクトのインスタンス化
         $message = new Message;
         //$message->username = $strUsername;
+        $message->sender_id = $sender_id;
         $message->body = $strMessage; 
 
         // 送信者を含めてメッセージを送信
