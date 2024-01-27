@@ -42,11 +42,6 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         $channelName = 'ToDo_Portfolio.' . $this->otherUserId;
-/* 
-        // 自分のユーザーIDと受信者のユーザーIDが一致する場合、チャンネル名を変更して自分も受信できるようにする
-        if ($this->user->id === $this->otherUserId) {
-            $channelName .= '.' . $this->user->id;
-        } */
 
         return [
             new PrivateChannel($channelName)
