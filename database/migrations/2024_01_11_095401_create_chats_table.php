@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {   
-        //チャットメッセージ保管テーブル
+        // チャットメッセージ保管テーブル
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
+            // 送信者のIDを登録する。 
             $table->unsignedBigInteger('user_id');
             $table->text('message');
             $table->timestamps();

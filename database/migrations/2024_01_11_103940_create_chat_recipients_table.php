@@ -14,6 +14,7 @@ return new class extends Migration
         //メッセージ受信者を判別するための中間テーブル。
         Schema::create('chat_recipients', function (Blueprint $table) {
             $table->id();
+            // 受信者のIDを登録する。
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('chat_id');
             $table->timestamps();

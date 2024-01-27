@@ -8,14 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class ChatRecipient extends Model
 {
     use HasFactory;
-
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function chat()
     {
-        $this->belongsTo(Chat::class);
+        return $this->belongsTo(Chat::class);
     }
 }

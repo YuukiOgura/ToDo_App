@@ -28,40 +28,56 @@
   <main>
     <div class="flex flex-col max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
       <div class="-m-1.5 overflow-x-auto">
-        <div class="p-1.5 min-w-full inline-block align-middle">
-          <div class="flex border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
-            {{-- サイドバー --}}
+        <div class="flex border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
+          {{-- サイドバー --}}
+          <div>
+            @include('components/partials/sidebar')
+          </div>
 
-            <div class="">
-              @include('components/partials/sidebar')
-            </div>
-
-
-            <div class="content ms-3">
-              @foreach ($otherUsers as $other)
-                <div id="vertical-tab-with-border-{{ $other->id }}" class="hidden" role="tabpanel"
-                  aria-labelledby="vertical-tab-with-border-item-{{ $other->id }}">
-                  <p class="text-gray-500 dark:text-gray-400">
-                    これは<em class="font-semibold text-gray-800 dark:text-gray-200">{{ $other->name }}</em>アイテムのタブボディです。
-                  </p>
-                  送信側メッセージ
-                  <div id="message-display-{{ $other->id }}" class="message-display"></div>
-                  受信側メッセージ
-                  <div id="other-display-{{ $other->id }}" class="other-display"></div>
+          <div class="content ms-3 me-3 flex-grow overflow-auto max-h-[400px]">
+            @foreach ($otherUsers as $other)
+              <div id="vertical-tab-with-border-{{ $other->id }}" class="hidden" role="tabpanel"
+                aria-labelledby="vertical-tab-with-border-item-{{ $other->id }}">
+                <p class="text-gray-500 dark:text-gray-400">
+                  これは<em class="font-semibold text-gray-800 dark:text-gray-200">{{ $other->name }}</em>アイテムのタブボディです。
+                </p>
+                <div id="message-display-{{ $other->id }}" class="message-display">
+                  @foreach ($allMessages as $message)
+                    @if (
+                        ($message->user_id == $user_id && $message->recipients->contains('user_id', $other->id)) ||
+                            ($message->user_id == $other->id && $message->recipients->contains('user_id', $user_id)))
+                      @if ($message->user_id == $user_id)
+                        <div class="flex justify-start w-full">
+                          <div
+                            class="mt-1 mb-1 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800">
+                            <p>{{ $message->user->name }}: {{ $message->message }}</p>
+                          </div>
+                        </div>
+                      @else
+                        <div class="flex justify-end w-full">
+                          <div
+                            class="mt-1 mb-1 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-teal-100 text-teal-800">
+                            <p>{{ $message->user->name }}: {{ $message->message }}</p>
+                          </div>
+                        </div>
+                      @endif
+                    @endif
+                  @endforeach
+                </div>
+                <!-- 送信フォーム -->
+                <div class="fixed bottom-0 left-0 right-0 bg-white p-4 max-w-[85rem] mx-auto px-4">
                   <form method="post" action="{{ route('chat.send') }}"
-                    onsubmit="onsubmit_Form(event, {{ $other->id }});">
+                    onsubmit="onsubmit_Form(event, {{ $other->id }});" class="">
                     @csrf
-                    メッセージ: <input type="text" id="input_message_{{ $other->id }}" autocomplete="off" />
                     <button type="submit" class="text-white bg-blue-700 px-5 py-2">送信</button>
+                    <textarea id="input_message_{{ $other->id }}" name="message" autocomplete="off" class="w-full h-20 py-2"></textarea>
                   </form>
                 </div>
-              @endforeach
-            </div>
+              </div>
+            @endforeach
           </div>
         </div>
       </div>
-    </div>
-    </div>
   </main>
 
   <script>
@@ -85,9 +101,22 @@
         .then(response => {
           console.log(response);
           // メッセージを表示する
-          var sentMessage = document.createElement('div');
-          sentMessage.textContent = message;
-          messageDisplay.appendChild(sentMessage);
+
+          // 要素を作成
+          var containerDiv = document.createElement('div');
+          containerDiv.classList.add('flex', 'justify-start', 'w-full');
+
+          var innerDiv = document.createElement('div');
+          innerDiv.classList.add('mt-1', 'mb-1', 'py-3', 'px-4', 'inline-flex', 'items-center', 'gap-x-2', 'text-sm',
+            'font-semibold', 'rounded-lg', 'border', 'border-transparent', 'bg-blue-100', 'text-blue-800');
+
+          var paragraph = document.createElement('p');
+          paragraph.textContent = message; // メッセージを設定
+
+          // 要素を組み合わせ
+          innerDiv.appendChild(paragraph);
+
+          messageDisplay.appendChild(innerDiv);
         })
         .catch(error => {
           console.error(error);
@@ -97,22 +126,34 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-    @foreach ($otherUsers as $other)
-      const messageDisplay_{{ $other->id }} = document.getElementById("other-display-{{ $other->id }}");
-
+      @foreach ($otherUsers as $other)
+        const messageDisplay_{{ $other->id }} = document.getElementById("message-display-{{ $other->id }}");
+      @endforeach
       window.Echo.private('ToDo_Portfolio.{{ Auth::id() }}')
         .listen('MessageSent', (e) => {
           console.log(e);
 
-          // Check if the received message is from the correct sender
-          if (e.message.sender_id === {{ $other->id }}) {
-            var receivedMessage = document.createElement('div');
-            receivedMessage.textContent = e.message.body;
-            messageDisplay_{{ $other->id }}.appendChild(receivedMessage);
-          }
+          @foreach ($otherUsers as $other)
+            if (e.message.sender_id === {{ $other->id }}) {
+              var containerDiv = document.createElement('div');
+              containerDiv.classList.add('flex', 'justify-end', 'w-full');
+
+              var innerDiv = document.createElement('div');
+              innerDiv.classList.add('mt-1', 'mb-1', 'py-3', 'px-4', 'inline-flex', 'items-center', 'gap-x-2',
+                'text-sm',
+                'font-semibold', 'rounded-lg', 'border', 'border-transparent', 'bg-teal-100', 'text-teal-800');
+              var paragraph = document.createElement('p');
+              paragraph.textContent = e.message.body;
+
+              innerDiv.appendChild(paragraph);
+              containerDiv.appendChild(innerDiv);
+
+              messageDisplay_{{ $other->id }}.appendChild(containerDiv);
+            }
+          @endforeach
         });
-    @endforeach
-  });
+
+    });
   </script>
 
 </body>
