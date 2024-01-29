@@ -16,7 +16,7 @@ class TaskController extends Controller
         // 認証済みユーザーの値を取得
         $user = Auth::user();
         $id = Auth::id();
-    
+
         // ユーザーに関連する全てのフォルダとタスクを取得
         $userFoldersWithTasks = $user->load('folders.tasks');
 
@@ -25,9 +25,12 @@ class TaskController extends Controller
         $tasks = $userFoldersWithTasks->tasks;
 
         // @if文に渡すための配列を準備する。
-        $prioritys = [1 => '重要', 2 =>'普通' , 3 =>'後回し'];
-        $folderFirst = $user->folders()->first();
-        
+        $prioritys = [1 => '重要', 2 => '普通', 3 => '後回し'];
+        // foldersにカラムがあるか判定。
+        $folderFirst = $user->folders->first();
+        // tasksテーブルのdel_flugが1のカラムを取得
+        $grandchildren = $tasks->where('del_flug', 1);
+        //dd($grandchildren);
         return view('tasks/index', [
             'folders' => $folders,
             'tasks' => $tasks,
@@ -35,6 +38,7 @@ class TaskController extends Controller
             'id' => $id,
             'prioritys' => $prioritys,
             'folderFirst' => $folderFirst,
+            'grandchildren' => $grandchildren
         ]);
     }
 
@@ -56,9 +60,9 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-   
 
-    public function edit(int $id ,TaskCreateRequest $request)
+
+    public function edit(int $id, TaskCreateRequest $request)
     {
         $task = Task::find($id);
         $task->title = $request->title_task;
@@ -74,30 +78,39 @@ class TaskController extends Controller
 
     public function destroy(Request $request)
     {
-        $task_id = $request->input('task_id');
-        $task = Task::where('id', $task_id)->where('del_flug', 1)->first();
-        if ($task) {
-            $task->delete();
-        }
+        $task_id = $request->input('check_task', []);
+        $action = $request->input('action');
 
-        //$task ->delete();
+        foreach ($task_id as $id) {
+            $task = Task::find($id);
+            if($task){
+                if($action === 'delete'){
+                    $task->delete();
+                }
+                if($action === 'update'){
+                    $task->del_flug = 0;
+                    $task->save();
+                }
+            }
+        }
 
         return redirect()->route('tasks.index');
     }
 
     public function completeTask(Request $request)
     {
-        $id = Auth::id();
+        $user = Auth::user();
         $task = Task::find($request->del_flug);
+        $task->del_flug = 1;
+        $task->save();
 
-        if ($task) {
-            $task->del_flug = 1;
-            $task->save();
-        }
-        $del_flug_id = Task::where('folder_id', $task->id)
-            ->where('del_flug', 0) // ここでdel_flugが0（非表示でない）を指定
-            ->get();
-        return redirect()->route('tasks.index', ['del_flug_id' => $del_flug_id]);
+        /* $back_task = Task::find($request->back_task);
+        if ($back_task->del_flug === 1) {
+            $back_task->del_flug = 0;
+            $back_task->save();
+        } */
+
+        return redirect()->route('tasks.index');
     }
 }
 /*
