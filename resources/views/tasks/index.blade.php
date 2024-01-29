@@ -52,7 +52,7 @@
 
             {{-- ページネーション --}}
             <div class="py-1 px-4">
-              <nav class="flex items-center space-x-1 justify-between" aria-label="Tabs" role="tablist">
+              <nav class="flex items-center justify-between" aria-label="Tabs" role="tablist">
 
                 <nav
                   class="pb-1 flex space-x-1 overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500"
@@ -71,11 +71,20 @@
                   @endforeach
                 </nav>
 
-                {{-- タスクの作成モーダル --}}
-                @if ($folderFirst)
-                  @include('components/todos/task_create_modal')
-                @endif
-
+                {{-- タスクの作成モーダル --}}           
+                  <div class="flex">
+                    @if ($folderFirst)
+                     <div class="flex">
+                       @include('components/todos/task_create_modal')
+                     </div>
+                    @endif
+                    {{-- タスクの削除モーダル --}}
+                    @if ($grandchildren->count() > 0)
+                      <div class="ml-4">
+                        @include('components/todos/task_delete_modal')
+                      </div>
+                    @endif
+                  </div>
               </nav>
             </div>
 
@@ -105,7 +114,7 @@
                         @foreach ($prioritys as $priority)
                           <tr class="">
                             <td class="px-6 py-1 text-sm font-medium text-gray-500 uppercase text-center">
-                              <div class = "{{-- py-2 border rounded-lg overflow-hidden --}}">
+                              <div class = "">
                                 {{ $priority }}
                               </div>
                             </td>
@@ -116,7 +125,7 @@
                           これにより、[重要、普通、後回し]毎に表示分けしています。 
                           --}}
                           @foreach ($tasks as $task)
-                            @if ($folder->id == $task->folder_id && $task->priority === $priority)
+                            @if ($folder->id == $task->folder_id && $task->priority === $priority && $task->del_flug === 0)
                               <tr>
 
                                 <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
@@ -136,17 +145,12 @@
                                         完了
                                       </button>
                                     </form>
-                                  @else
-                                    <div class="">完了しました</div>
                                   @endif
                                 </td>
 
                                 <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
                                   @if ($task->del_flug === 0)
                                     @include('components/todos/task_edit_modal')
-                                    {{-- <a href="{{ route('tasks.edit', ['id' => $id, 'task_id' => $task->id]) }}">編集</a> --}}
-                                  @elseif ($task->del_flug === 1)
-                                    @include('components/todos/task_delete_modal')
                                   @endif
                                 </td>
 

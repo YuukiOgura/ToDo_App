@@ -41,7 +41,7 @@
                 フォルダ名
               </label><!--forとidで紐づけ-->
 
-              <input type="text" name="title" id="title"
+              <input type="text" name="title" id="title" required
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
               <!--nameは送信された時のキー名-->
 

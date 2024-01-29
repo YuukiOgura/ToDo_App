@@ -40,7 +40,7 @@
               <label for ="folders_select" class="leading-7 text-sm text-gray-600">
                 フォルダ
               </label>
-              <select name="folders_select" method = "post" id="folders_select"
+              <select name="folders_select" method = "post" id="folders_select" required
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 @foreach ($folders as $folder)
                   <option value = "{{ $folder->id }}">{{ $folder->title }}
@@ -51,17 +51,17 @@
             </div>
 
             <div class="relative">
-              <label class="leading-7 text-sm text-gray-600">重要度を選択してください</label> <br>
+              <div class="leading-7 text-sm text-gray-600">重要度を選択してください</div> <br>
               <div
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
 
-                <input type="radio" name="priority" value="1" id="priority1" class="mr-2">
+                <input type="radio" name="priority" value="1" id="priority1" class="mr-2" required>
                 <label for="priority1" class="mr-4">重要</label>
 
-                <input type="radio" name="priority" value="2" id="priority2" class="mx-4">
+                <input type="radio" name="priority" value="2" id="priority2" class="mx-4" required>
                 <label for="priority2" class="mr-4">普通</label>
 
-                <input type="radio" name="priority" value="3" id="priority3" class ="ml-2">
+                <input type="radio" name="priority" value="3" id="priority3" class ="ml-2" required>
                 <label for="priority3">後回し</label>
               </div>
               @error('priority')
@@ -73,7 +73,7 @@
                   タスク名
                 </label>
 
-                <input type="text" name="title_task" id="title_task"
+                <input type="text" name="title_task" id="title_task" required
                   class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
 
                 @error('title_task')
@@ -83,7 +83,7 @@
 
               <div class="relative">
                 <label for="textarea" class="leading-7 text-sm text-gray-600">タスク説明文</label> <br>
-                <textarea name="textarea" id="textarea" cols="50" rows="3"
+                <textarea name="textarea" id="textarea" cols="50" rows="3" required
                   class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea><br>
                 {{-- タスクの説明 --}}
                 @error('textarea')
@@ -95,7 +95,7 @@
                 <label for="due_date" class="leading-7 text-sm text-gray-600">
                   期限
                 </label> <br>
-                <input type="date" name="due_date" id = "due_date"
+                <input type="date" name="due_date" id = "due_date" required
                   class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 @error('due_date')
                   <div class="alert alert-danger text-red-500">{{ $message }}</div>

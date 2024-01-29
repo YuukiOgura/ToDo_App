@@ -69,6 +69,9 @@ class ProfileController extends Controller
         if ($delete_profile_image = $request->user()->profile_image_path){
             Storage::disk('public')->delete($delete_profile_image);
         }
+
+        $user->chats()->delete();
+        $user->chatRecipients()->delete();
         
         Auth::logout();
 
