@@ -18,9 +18,21 @@
         height: 'auto',
         firstDay: 1,
         headerToolbar: {
-          left: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-          center: "title",
-          right: "today prev,next"
+          start: 'prev,next today',
+          center: 'title',
+          right: ''
+        },
+
+        dayHeaderContent: function(arg) {
+          if (arg.view.type === 'timeGridWeek') {
+            // 週間表示の場合のみ日付の部分だけを表示
+            return arg.date.getDate().toString();
+          } else {
+            // 月間表示や日間表示の場合は曜日を表示
+            return arg.date.toLocaleDateString('ja-JP', {
+              weekday: 'short'
+            }); 
+          }
         },
         buttonText: {
           today: '今日',
@@ -39,15 +51,22 @@
           // マウスがイベントから出たときの処理
           document.body.style.cursor = 'default'; // カーソルを元に戻す
         },
-        eventDidMount: (e)=>{
+        eventDidMount: (e) => {
           // Tippyプラグインを使用し、クリック時にツールチップを出すようにした。
-          tippy(e.el,{
+          tippy(e.el, {
             content: e.event.extendedProps.description,
-            trigger:'click',
+            trigger: 'click',
           });
         },
         events: "/get_events",
       });
+
+      // ドロップダウンメニューの変更を監視し、FullCalendarの表示を変更する
+      document.getElementById('viewSelector').addEventListener('change', function() {
+        var selectedView = this.value;
+        calendar.changeView(selectedView);
+      });
+
       calendar.render();
     });
   </script>
@@ -65,6 +84,25 @@
     .fc-daygrid-day-top {
       color: #333;
     }
+
+    @media (max-width: 768px) {
+      .fc .fc-toolbar-title {
+        font-size: 16px !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .fc .fc-button {
+        margin-left: 0.2em !important;
+        padding: 0.4em 0.4em
+      }
+    }
+
+    @media (max-width:768px) {
+      .fc .fc-toolbar.fc-header-toolbar {
+        margin-bottom: 0.1em;
+      }
+    }
   </style>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -77,20 +115,14 @@
         <span
           class="font-semibold whitespace-nowrap text-gray-800 border-e border-e-white/[.7] sm:border-transparent pe-4 me-4 sm:py-3.5 dark:text-white">
           Calendar</span>
-
-        <div class="w-full sm:hidden">
-          <button type="button"
-            class="hs-collapse-toggle group w-full inline-flex justify-between items-center gap-2 rounded-lg font-medium text-gray-600 border border-gray-200 align-middle py-1.5 px-2 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-white/[.5] transition"
-            data-hs-collapse="#secondary-nav-toggle" aria-controls="secondary-nav-toggle"
-            aria-label="Toggle navigation">
-            Overview
-            <svg class="hs-dropdown-open:rotate-180 flex-shrink-0 w-4 h-4 transition group-hover:text-gray-800"
-              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
-        </div>
+      </div>
+      <div id="calendarViewSelector">
+        <select id="viewSelector">
+          <option value="dayGridMonth">月</option>
+          <option value="timeGridWeek">週</option>
+          <option value="timeGridDay">日</option>
+          <option value="listMonth">リスト</option>
+        </select>
       </div>
     </div>
   </nav>
@@ -101,8 +133,8 @@
         <div class="p-1.5 min-w-full inline-block align-middle">
           <div class="border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
 
-            <div class="m-auto m-5 p-5">
-              <div id='calendar'></div>
+            <div class="">
+              <div id="calendar"></div>
             </div>
           </div>
         </div>

@@ -1,8 +1,19 @@
+{{-- ブラウザサイズ --}}
 <button type="button"
-  class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-400 text-white hover:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+  class="hidden sm:inline-block py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-400 text-white hover:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
   data-hs-overlay="#hs-{{ $task->id }}-modal">
   {{ $task->title }}
 </button>
+{{-- スマホサイズ --}}
+<button type="button"
+  class="sm:hidden py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-400 text-white 
+  [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500
+  hover:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+  data-hs-overlay="#hs-{{ $task->id }}-modal"
+  style="max-width: 80px; overflow-x: scroll; white-space: nowrap;">
+  {{ $task->title }}
+</button>
+
 
 <div id="hs-{{ $task->id }}-modal"
   class="hs-overlay hidden w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto pointer-events-none">
@@ -27,45 +38,45 @@
         </button>
       </div>
 
-        <div class="p-4 overflow-y-auto">
-          <p class="mt-1 mb-10 text-gray-800 dark:text-gray-400">
-            タスクの詳細です。<br>
-          </p>
+      <div class="p-4 overflow-y-auto">
+        <p class="mt-1 mb-10 text-gray-800 dark:text-gray-400">
+          タスクの詳細です。<br>
+        </p>
 
-          <div class="lg:w-1/2 md:w-2/3 mx-auto">
-            <div class="flex flex-wrap -m-2 mb-10">
+        <div class="lg:w-1/2 md:w-2/3 mx-auto">
+          <div class="flex flex-wrap -m-2 mb-10">
 
 
-              <div class="p-2 w-full">
+            <div class="p-2 w-full">
 
-                <div class="relative">
-                  <p class="leading-7 text-sm text-gray-600">タスク詳細</p>
+              <div class="relative">
+                <p class="leading-7 text-sm text-gray-600">タスク詳細</p>
 
-                  
-                    <div
-                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out text-left">
-                      
-                      {{$task->title}}<br />
-                      {{$task->textarea}}<br />
-                      {{$task->due_date}}<br />
-                      {{$task->priority}}<br />
 
-                    </div>
+                <div
+                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out text-left">
+
+                  {{ $task->title }}<br />
+                  {{ $task->textarea }}<br />
+                  {{ $task->due_date }}<br />
+                  {{ $task->priority }}<br />
+
                 </div>
-
               </div>
 
             </div>
+
           </div>
         </div>
+      </div>
 
-        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
-          <button type="button"
-            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-            data-hs-overlay="#hs-{{ $task->id }}-modal">
-            戻る
-          </button>
-        </div>
+      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+        <button type="button"
+          class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+          data-hs-overlay="#hs-{{ $task->id }}-modal">
+          戻る
+        </button>
+      </div>
     </div>
   </div>
 
