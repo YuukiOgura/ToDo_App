@@ -62,7 +62,7 @@
                   --}}
                   @foreach ($folders as $folder)
                     <button type=button
-                      class="focus:text-blue-600 min-w-[80px] flex text-gray-800 hover:bg-blue-200 py-2 text-sm rounded-full disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 justify-center items-center active
+                      class="focus:text-blue-600 min-w-[80px] flex text-sky-800 -mb-px py-2 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-t-lg hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 justify-center items-center active
                       flex space-x-1 w-64 overflow-x-scroll
                       [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500"
                       aria-current="page" id="horizontal-scroll-tab-item-{{ $folder->id }}"
