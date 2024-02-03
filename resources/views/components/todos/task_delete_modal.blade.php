@@ -1,7 +1,13 @@
 <button type="button"
-  class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-orange-300 text-white hover:bg-orange-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+  class="hidden sm:inline-block py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-orange-300 text-white hover:bg-orange-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
   data-hs-overlay="#hs-task-delete-modal">
   タスクを削除/復元
+</button>
+
+<button type="button"
+  class="sm:hidden py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-orange-300 text-white hover:bg-orange-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+  data-hs-overlay="#hs-task-delete-modal">
+  <img src="/icon/kago.png" alt="Kago Icon" class="h-6 w-7">
 </button>
 
 <div id="hs-task-delete-modal"
@@ -35,8 +41,18 @@
           <p class="mt-1 mb-3 text-gray-800 dark:text-gray-400">
             タスクを削除又は復元します。
           </p>
-          <input type="radio" name="action" value="delete" required>削除
-          <input type="radio" name="action" value="update" required>復元
+          <div class="flex gap-x-2">
+            <div class="flex items-center">
+              <input type="radio" name="action" value="delete" id= "delete" required>
+              <label for="delete"
+                class="flex flex-col w-full max-w-lg mx-auto text-center border-2 rounded-2xl border-red-300 p-2 ml-1 text-2xl text-white bg-red-300">削除</label>
+            </div>
+            <div class="flex items-center">
+              <input type="radio" name="action" value="update" id= "update" required>
+              <label for="update"
+                class="flex flex-col w-full max-w-lg mx-auto text-center border-2 rounded-2xl border-blue-300 p-2 ml-1 text-2xl text-white bg-blue-300">復元</label>
+            </div>
+          </div>
 
           <div class="lg:w-full md:w-2/3 mx-auto">
             <div class="flex flex-wrap -m-2 mb-10">
@@ -45,12 +61,18 @@
                   <p class="leading-7 text-sm text-gray-600">タスク名</p>
                   <div
                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 
-                    focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none 
-                    text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out text-left">
+                            focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none 
+                            text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out text-left overflow-x-auto">
                     @foreach ($grandchildren as $children)
-                      <div>
-                        <input type=checkbox name = "check_task[]" value = "{{ $children->id }}"
-                          class = "mr-2">{{ $children->title }}{{ $children->textarea }}{{ $children->due_date }}{{ $children->priority }}
+                      <div class="flex items-center mb-2">
+                        <input type="checkbox" name="check_task[]" value="{{ $children->id }}" class="mr-2">
+                        <div
+                          class="flex gap-x-2 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500">
+                          <p class="border-r border-gray-400 pr-2 whitespace-nowrap">{{ $children->title }}</p>
+                          <p class="border-r border-gray-400 pr-2 whitespace-nowrap">{{ $children->due_date }}</p>
+                          <p class="border-r border-gray-400 pr-2 whitespace-nowrap">{{ $children->priority }}</p>
+                          <p class="whitespace-nowrap">{{ $children->textarea }}</p>
+                        </div>
                       </div>
                     @endforeach
                   </div>

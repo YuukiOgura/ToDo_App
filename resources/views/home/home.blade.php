@@ -10,21 +10,21 @@
 
 <body>
     <header class="text-gray-600 body-font bg-blue-100">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <div class="container sm:mx-auto flex flex-wrap p-5 md:flex-row items-center justify-between">
             <div class="">
                 ITスクール浜松
             </div>
-            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <nav class="flex flex-wrap items-center text-base">
             @if (Route::has('login'))
-                <div class="">
+                <div class="gap-x-4 flex">
                     @auth
-                        <a href="{{ route('tasks.index') }}" class="mr-5 hover:text-gray-900">ユーザー</a>
+                        <a href="{{ route('tasks.index') }}" class=" hover:text-gray-900">ユーザー</a>
                     @else
-                        <a href="{{ route('login') }}" class="mr-5 hover:text-gray-900">
+                        <a href="{{ route('login') }}" class=" hover:text-gray-900">
                             ログイン</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="mr-5 hover:text-gray-900">初回登録</a>
+                            <a href="{{ route('register') }}" class="hover:text-gray-900">初回登録</a>
                         @endif
                     @endauth
                 </div>

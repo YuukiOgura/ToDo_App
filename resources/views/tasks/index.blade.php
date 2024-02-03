@@ -27,9 +27,9 @@
 
   <main>
 
-    <div class="flex flex-col max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pb-5">
       <div class="-m-1.5 overflow-x-auto">
-        <div class="p-1.5 min-w-full inline-block align-middle">
+        <div class="">
           <div class="border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
 
             <div class="py-3 px-4 flex justify-between">
@@ -51,28 +51,31 @@
             </div>
 
             {{-- ページネーション --}}
-            <div class="py-1 px-4">
+            <div class="py-1 px-2">
               <nav class="flex items-center justify-between" aria-label="Tabs" role="tablist">
 
                 <nav
-                  class="pb-1 flex space-x-1 overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500"
+                  class="pb-1 flex space-x-1 w-64 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500"
                   aria-label="Tabs" role="tablist">
                   {{-- 
                   下記のforeachは、TailwindCSSの記述を使って疑似的なSPAを作るためのページネーションの記述です。
                   --}}
                   @foreach ($folders as $folder)
                     <button type=button
-                      class="focus:text-blue-600 min-w-[40px] flex justify-center items-center text-gray-800 hover:bg-gray-100 py-2.5 text-sm rounded-full disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 active"
+                      class="focus:text-blue-600 min-w-[80px] flex text-sky-800 -mb-px py-2 px-3 inline-flex items-center gap-2 bg-gray-50 text-sm font-medium text-center border text-gray-500 rounded-t-lg hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 justify-center items-center active
+                      flex space-x-1 w-64 overflow-x-scroll
+                      [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500"
                       aria-current="page" id="horizontal-scroll-tab-item-{{ $folder->id }}"
                       data-hs-tab="#horizontal-scroll-tab-{{ $folder->id }}"
-                      aria-controls="horizontal-scroll-tab-{{ $folder->id }}" role="tab">
-                      {{ $folder->title }}
+                      aria-controls="horizontal-scroll-tab-{{ $folder->id }}" role="tab"
+                      style="max-width: 80px; overflow-x: scroll; white-space: nowrap;">
+                        {{ $folder->title }}
                     </button>
                   @endforeach
                 </nav>
 
                 {{-- タスクの作成モーダル --}}           
-                  <div class="flex">
+                  <div class="flex ml-2">
                     @if ($folderFirst)
                      <div class="flex">
                        @include('components/todos/task_create_modal')
@@ -80,7 +83,7 @@
                     @endif
                     {{-- タスクの削除モーダル --}}
                     @if ($grandchildren->count() > 0)
-                      <div class="ml-4">
+                      <div class="ml-2">
                         @include('components/todos/task_delete_modal')
                       </div>
                     @endif
@@ -89,7 +92,7 @@
             </div>
 
             {{-- テーブル --}}
-            <div class="overflow-hidden">
+            <div class="overflow-y-auto max-h-screen">
               {{--
                 下記のforeachは、上部のページネーションの記載を用いて連動するテーブル作成に必要な記述です。 
               --}}
@@ -102,10 +105,10 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                       <thead class="">
                         <tr class = "">
-                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">タイトル</td>
-                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">期限</td>
-                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">完了</td>
-                          <td class="w-1/4 px-6 py-3 text-xs font-medium text-gray-500 uppercase text-center">アクション</td>
+                          <td class="w-1/4 px-3 py-3 text-xs font-medium text-gray-500 uppercase text-center">タイトル</td>
+                          <td class="w-1/4 px-3 py-3 text-xs font-medium text-gray-500 uppercase text-center">期限</td>
+                          <td class="w-1/4 px-3 py-3 text-xs font-medium text-gray-500 uppercase text-center">完了</td>
+                          <td class="w-1/4 px-3 py-3 text-xs font-medium text-gray-500 uppercase text-center">アクション</td>
                         </tr>
                       </thead>
 
@@ -113,10 +116,10 @@
 
                         @foreach ($prioritys as $priority)
                           <tr class="">
-                            <td class="px-6 py-1 text-sm font-medium text-gray-500 uppercase text-center">
-                              <div class = "">
+                            <td class="px-3 py-1 text-sm font-medium text-gray-500 uppercase text-center">
+                              
                                 {{ $priority }}
-                              </div>
+                              
                             </td>
                           </tr>
                           {{-- 
@@ -128,15 +131,15 @@
                             @if ($folder->id == $task->folder_id && $task->priority === $priority && $task->del_flug === 0)
                               <tr>
 
-                                <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                <td class="w-1/4  py-1 text-xs font-medium text-gray-500 uppercase text-center">
                                   @include('components/todos/task_show_modal')
                                 </td>
 
-                                <td class="w-1/4 px-6 py-1 text-s font-medium text-gray-500 uppercase text-center">
+                                <td class="w-1/4  py-1 text-s font-medium text-gray-500 uppercase text-center">
                                   {{ $task->due_date }}
                                 </td>
 
-                                <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                <td class="w-1/4  py-1 text-xs font-medium text-gray-500 uppercase text-center">
                                   @if ($task->del_flug === 0)
                                     <form action="{{ route('tasks.complete') }}" method="post">
                                       @csrf
@@ -148,7 +151,7 @@
                                   @endif
                                 </td>
 
-                                <td class="w-1/4 px-6 py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                <td class="w-1/4  py-1 text-xs font-medium text-gray-500 uppercase text-center">
                                   @if ($task->del_flug === 0)
                                     @include('components/todos/task_edit_modal')
                                   @endif
