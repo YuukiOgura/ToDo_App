@@ -29,8 +29,8 @@ class FolderCreateRequest extends FormRequest
 
     public function messages(){
         return [
-            'title.required' => 'フォルダー名を入力してください',
-            'title.max' => 'フォルダー名は最大20文字としてください',
+            'title.required' => 'フォルダー名を入力してください。',
+            'title.max' => 'フォルダー名は最大20文字としてください。',
         ];
     }
 }

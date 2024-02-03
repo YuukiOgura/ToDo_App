@@ -28,7 +28,7 @@
       </div>
 
 
-      <form action ="{{ route('folders.destroy') }}" method = 'post'>
+      <form action ="{{ route('folders.destroy') }}" method = 'post' id ="delete_folder">
         @csrf
         @method('delete')
         <div class="p-4 overflow-y-auto">
@@ -49,11 +49,41 @@
                   @foreach ($folders as $folder)
                     <div
                       class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                      <input type=checkbox name = "check_folder[]" value = "{{ $folder->id }}" class = "mr-2">{{ $folder->title }}
+                      <input type=checkbox name = "check_folder[]" value = "{{ $folder->id }}"
+                        class = "mr-2">{{ $folder->title }}
                     </div>
                   @endforeach
                 </div>
 
+                @error('check_folder')
+                  <div class="alert alert-danger text-red-500">{{ $message }}</div>
+                @enderror
+                <div id="folderError" class="alert alert-danger text-red-500" style="display: none;"></div>
+
+
+                <script>
+                  document.getElementById('delete_folder').addEventListener('submit', function(event) {
+                    var checkboxes = document.querySelectorAll('input[type="checkbox"][name="check_folder[]"]');
+                    var checked = false;
+                    var folderError = document.getElementById("folderError");
+                    checkboxes.forEach(function(checkbox) {
+                      if (checkbox.checked) {
+                        checked = true;
+                      }
+                    });
+
+                    if (!checked) {
+                      folderError.textContent = "少なくとも1つのフォルダを選択してください。";
+                      folderError.style.display = "block";
+                      event.preventDefault(); // フォームの送信を中止
+                    } else {
+                      var confirmSubmit = confirm("本当に削除してもよいですか？");
+                      if (!confirmSubmit) {
+                        event.preventDefault(); // フォームの送信を中止
+                      }
+                    }
+                  });
+                </script>
               </div>
 
             </div>
