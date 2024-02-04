@@ -32,8 +32,9 @@
             </nav>
         </div>
     </header>
-    <main>
-        
+    <main class="h-screen">
+        <div class="bg-blue-200 h-full">
+        </div>
     </main>
 </body>
 
