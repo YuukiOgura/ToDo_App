@@ -34,7 +34,7 @@
       </div>
 
 
-      <form action ="{{ route('tasks.destroy', [$id]) }}" method = 'post'>
+      <form action ="{{ route('tasks.destroy', [$id]) }}" method = 'post' id= "taskBackOrDelete">
         @csrf
         @method('delete')
         <div class="p-4 overflow-y-auto">
@@ -53,6 +53,7 @@
                 class="flex flex-col w-full max-w-lg mx-auto text-center border-2 rounded-2xl border-blue-300 p-2 ml-1 text-2xl text-white bg-blue-300">復元</label>
             </div>
           </div>
+          <div id="taskBackOrDeleteError" class="alert alert-danger text-red-500" style="display: none;"></div>
 
           <div class="lg:w-full md:w-2/3 mx-auto">
             <div class="flex flex-wrap -m-2 mb-10">
@@ -77,6 +78,7 @@
                     @endforeach
                   </div>
                 </div>
+                <div id="taskBackOrDeleteCheckedError" class="alert alert-danger text-red-500" style="display: none;"></div>
               </div>
             </div>
           </div>

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\TaskCreateRequest;
-use App\Models\Folder;
+use App\Http\Requests\TaskDeleteRequest;
+use App\Http\Requests\TaskEditRequest;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,7 +63,7 @@ class TaskController extends Controller
 
 
 
-    public function edit(int $id, TaskCreateRequest $request)
+    public function edit(int $id, TaskEditRequest $request)
     {
         $task = Task::find($id);
         $task->title = $request->title_task;
@@ -76,7 +77,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function destroy(Request $request)
+    public function destroy(TaskDeleteRequest $request)
     {
         $task_id = $request->input('check_task', []);
         $action = $request->input('action');

@@ -69,25 +69,25 @@
                       data-hs-tab="#horizontal-scroll-tab-{{ $folder->id }}"
                       aria-controls="horizontal-scroll-tab-{{ $folder->id }}" role="tab"
                       style="max-width: 80px; overflow-x: scroll; white-space: nowrap;">
-                        {{ $folder->title }}
+                      {{ $folder->title }}
                     </button>
                   @endforeach
                 </nav>
 
-                {{-- タスクの作成モーダル --}}           
-                  <div class="flex ml-2">
-                    @if ($folderFirst)
-                     <div class="flex">
-                       @include('components/todos/task_create_modal')
-                     </div>
-                    @endif
-                    {{-- タスクの削除モーダル --}}
-                    @if ($grandchildren->count() > 0)
-                      <div class="ml-2">
-                        @include('components/todos/task_delete_modal')
-                      </div>
-                    @endif
-                  </div>
+                {{-- タスクの作成モーダル --}}
+                <div class="flex ml-2 text-center">
+                  @if ($folderFirst)
+                    <div class="flex">
+                      @include('components/todos/task_create_modal')
+                    </div>
+                  @endif
+                  {{-- タスクの削除モーダル --}}
+                  @if ($grandchildren->count() > 0)
+                    <div class="ml-2">
+                      @include('components/todos/task_delete_modal')
+                    </div>
+                  @endif
+                </div>
               </nav>
             </div>
 
@@ -117,9 +117,9 @@
                         @foreach ($prioritys as $priority)
                           <tr class="">
                             <td class="px-3 py-1 text-sm font-medium text-gray-500 uppercase text-center">
-                              
-                                {{ $priority }}
-                              
+
+                              {{ $priority }}
+
                             </td>
                           </tr>
                           {{-- 
@@ -131,7 +131,7 @@
                             @if ($folder->id == $task->folder_id && $task->priority === $priority && $task->del_flug === 0)
                               <tr>
 
-                                <td class="w-1/4  py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                <td class="w-1/4  py-1 uppercase text-center">
                                   @include('components/todos/task_show_modal')
                                 </td>
 
@@ -151,7 +151,7 @@
                                   @endif
                                 </td>
 
-                                <td class="w-1/4  py-1 text-xs font-medium text-gray-500 uppercase text-center">
+                                <td class="w-1/4  py-1 uppercase text-center">
                                   @if ($task->del_flug === 0)
                                     @include('components/todos/task_edit_modal')
                                   @endif
@@ -172,6 +172,13 @@
       </div>
     </div>
   </main>
+  @include('components/script/validate/validate_folder_create')
+  @include('components/script/validate/validate_folder_delete')
+  @include('components/script/validate/validate_task_create')
+  @include('components/script/validate/validate_task_edit')
+  @include('components/script/validate/validate_task_back_or_delete')
+
+
 </body>
 
 </html>
