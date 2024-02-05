@@ -1,0 +1,32 @@
+.fc-day-sat {
+    background-color: #cce3f6;
+  }
+
+  .fc-day-sun {
+    background-color: #f4d0df;
+  }
+
+  .fc-col-header-cell-cushion,
+  .fc-daygrid-day-number,
+  .fc-daygrid-day-top {
+    color: #333;
+  }
+
+  @media (max-width: 768px) {
+    .fc .fc-toolbar-title {
+      font-size: 16px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .fc .fc-button {
+      margin-left: 0.2em !important;
+      padding: 0.4em 0.4em
+    }
+  }
+
+  @media (max-width:768px) {
+    .fc .fc-toolbar.fc-header-toolbar {
+      margin-bottom: 0.1em;
+    }
+  }
