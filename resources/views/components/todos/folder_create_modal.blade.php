@@ -28,7 +28,7 @@
       </div>
 
 
-      <form action="{{ route('folders.store') }}" method="post" onsubmit="return validateForm()">
+      <form action="{{ route('folders.store') }}" method="post" onsubmit="return validateFormFolder()">
         @csrf
         <div class="p-4 overflow-y-auto">
           <p class="mt-1 mb-10 text-gray-800 dark:text-gray-400">
@@ -49,25 +49,7 @@
                 <div class="alert alert-danger text-red-500">{{ $message }}</div>
               @enderror
               <div id="titleError" class="alert alert-danger text-red-500" style="display: none;"></div>
-              <script>
-                function validateForm() {
-                  var titleInput = document.getElementById("title");
-                  var titleError = document.getElementById("titleError");
-
-                  if (titleInput.value === "") {
-                    titleError.textContent = "フォルダ名を入力してください。";
-                    titleError.style.display = "block";
-                    return false; // フォーム送信をキャンセル
-                  }
-                  if (titleInput.value.length > 20){
-                    titleError.textContent = "フォルダー名は最大20文字としてください。";
-                    titleError.style.display = "block";
-                    return false;
-                  }
-
-                  return true; // フォーム送信を許可
-                }
-              </script>
+              
 
             </div>
           </div>

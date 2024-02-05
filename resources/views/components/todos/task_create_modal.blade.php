@@ -35,7 +35,7 @@
         </button>
       </div>
 
-      <form action="{{ route('tasks.store', [$id]) }}" method="post">
+      <form action="{{ route('tasks.store', [$id]) }}" method="post" onsubmit="return validateFormTask()">
         @csrf
         <div class="p-4 overflow-y-auto">
           <p class="mt-1 mb-10 text-gray-800 dark:text-gray-400">
@@ -55,11 +55,13 @@
                   </option>
                 @endforeach
               </select>
+              <div id="folderError" class="alert alert-danger text-red-500" style="display: none;"></div>
+
 
             </div>
 
             <div class="relative">
-              <div class="leading-7 text-sm text-gray-600">重要度を選択してください</div> <br>
+              <div class="leading-7 text-sm text-gray-600">重要度を選択してください</div>
               <div
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
 
@@ -75,6 +77,7 @@
               @error('priority')
                 <div class="alert alert-danger text-red-500">{{ $message }}</div>
               @enderror
+              <div id="priorityError" class="alert alert-danger text-red-500" style="display: none;"></div>
 
               <div class="relative">
                 <label for="title" class="leading-7 text-sm text-gray-600">
@@ -87,6 +90,7 @@
                 @error('title_task')
                   <div class="alert alert-danger text-red-500">{{ $message }}</div>
                 @enderror
+                <div id="taskTitleError" class="alert alert-danger text-red-500" style="display: none;"></div>
               </div>
 
               <div class="relative">
@@ -97,9 +101,10 @@
                 @error('textarea')
                   <div class="alert alert-danger text-red-500">{{ $message }}</div>
                 @enderror
+                <div id="taskTextareaError" class="alert alert-danger text-red-500" style="display: none;"></div>
               </div>
 
-              <div class="relative">
+              <div class="relative mb-2">
                 <label for="due_date" class="leading-7 text-sm text-gray-600">
                   期限
                 </label> <br>
@@ -108,6 +113,7 @@
                 @error('due_date')
                   <div class="alert alert-danger text-red-500">{{ $message }}</div>
                 @enderror
+                <div id="dueDateError" class="alert alert-danger text-red-500 mb-2" style="display: none;"></div>
               </div>
             </div>
           </div>

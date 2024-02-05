@@ -27,7 +27,7 @@
         </button>
       </div>
 
-      <form action="{{ route('tasks.edit', ['id' => $task->id]) }}" method="post">{{-- $idは、認証ユーザーのid --}}
+      <form action="{{ route('tasks.edit', ['id' => $task->id]) }}" method="post" onsubmit="return validateFormTaskEdit()">
         @csrf
         <div class="p-4 overflow-y-auto">
           <p class="mt-1 mb-10 text-gray-800 dark:text-gray-400">
@@ -40,7 +40,7 @@
               <label for ="folders_select" class="leading-7 text-sm text-gray-600">
                 フォルダ
               </label>
-              <select name="folders_select" method = "post" id="folders_select"
+              <select name="folders_select" method = "post" id="folders_select_edit" required
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 @foreach ($folders as $folder)
                   <option value="{{ $folder->id }}" {{ $folder->id == $task->folder_id ? 'selected' : '' }}>
@@ -48,6 +48,7 @@
                   </option>
                 @endforeach
               </select>
+              <div id="folderEditError" class="alert alert-danger text-red-500" style="display: none;"></div>
 
             </div>
 
@@ -59,53 +60,57 @@
               text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
 
                 <input type="radio" name ="priority" value=1 {{ $task->priority === '重要' ? 'checked' : '' }}
-                  id = "priority1" class="mr-2">
-                <label for="priority1" class="mr-4">重要</label>
+                  id = "priority1Edit" class="mr-2" required>
+                <label for="priority1Edit" class="mr-4">重要</label>
 
                 <input type="radio" name ="priority" value=2 {{ $task->priority === '普通' ? 'checked' : '' }}
-                  id = "priority2" class="mx-4">
-                <label for="priority2" class="mr-4">普通</label>
+                  id = "priority2Edit" class="mx-4" required>
+                <label for="priority2Edit" class="mr-4">普通</label>
 
                 <input type="radio" name ="priority" value=3 {{ $task->priority === '後回し' ? 'checked' : '' }}
-                  id = "priority3" class="ml-2">
-                <label for="priority3">後回し</label>
+                  id = "priority3Edit" class="ml-2" required>
+                <label for="priority3Edit">後回し</label>
 
               </div>
               @error('priority')
                 <div class="alert alert-danger text-red-500">{{ $message }}</div>
               @enderror
+              <div id="priorityEditError" class="alert alert-danger text-red-500" style="display: none;"></div>
 
               <div class="relative">
                 <label for="title" class="leading-7 text-sm text-gray-600">
                   タスク名
                 </label>
 
-                <input type="text" name="title_task" id="title_task" value="{{ $task->title }}"
+                <input type="text" name="title_task" id="title_task_edit" value="{{ $task->title }}" required
                   class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 @error('title_task')
                   <div class="alert alert-danger text-red-500">{{ $message }}</div>
                 @enderror
+                <div id="taskTitleEditError" class="alert alert-danger text-red-500" style="display: none;"></div>
               </div>
 
               <div class="relative">
                 <label for="textarea" class="leading-7 text-sm text-gray-600">タスク説明文</label> <br>
-                <textarea name="textarea" id="textarea" cols="50" rows="3"
+                <textarea name="textarea" id="textareaEdit" cols="50" rows="3" required
                   class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $task->textarea }}</textarea><br>
                 {{-- タスクの説明 --}}
                 @error('textarea')
                   <div class="alert alert-danger text-red-500">{{ $message }}</div>
                 @enderror
+                <div id="textareaEditError" class="alert alert-danger text-red-500" style="display: none;"></div>
               </div>
 
-              <div class="relative">
+              <div class="relative mb-2">
                 <label for="due_date" class="leading-7 text-sm text-gray-600">
                   期限
                 </label> <br>
-                <input type="date" name="due_date" id = "due_date" value= "{{ $task->due_date }}"
+                <input type="date" name="due_date" id = "due_date_edit" value= "{{ $task->due_date }}" required
                   class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 @error('due_date')
                   <div class="alert alert-danger text-red-500">{{ $message }}</div>
                 @enderror
+                <div id="dueDateEditError" class="alert alert-danger text-red-500" style="display: none;"></div>
               </div>
             </div>
           </div>
