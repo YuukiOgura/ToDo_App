@@ -1,30 +1,11 @@
 <!DOCTYPE html>
-<html lang="ja">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+@extends('layouts.main')
+@section('title','Profile')
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <title>ToDo</title>
-</head>
+  
+@section('navTitle')
 
-<body style ="overflow-y: scroll">
-
-  <!-- Header -->
-  @include('components/partials/header')
-
-  <!-- Nav -->
-  <nav class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="relative flex flex-row justify-between items-center gap-x-8 border-t py-4 sm:py-0 dark:border-slate-700">
-      <div class="flex items-center w-full sm:w-[auto]">
-        <span
-          class="font-semibold whitespace-nowrap text-gray-800 border-e border-e-white/[.7] sm:border-transparent pe-4 me-4 sm:py-3.5 dark:text-white">
-          ToDo</span>
-      </div>
-    </div>
-  </nav>
-  <main>
+@section('content')
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -47,7 +28,4 @@
         </div>
       </div>
     </div>
-  </main>
-</body>
-
-</html>
+@endsection
