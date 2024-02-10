@@ -34,6 +34,7 @@
     </header>
     <main class="h-screen">
         <div class="bg-blue-200 h-full">
+            <a href = "{{ route('weather')}}">天気</a>
         </div>
     </main>
 </body>
