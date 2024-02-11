@@ -10,10 +10,10 @@
 
 <body>
     <header class="text-gray-600 body-font bg-blue-100">
-        <div class="container sm:mx-auto flex flex-wrap p-5 md:flex-row items-center justify-between">
+        <div class="container sm:mx-auto flex flex-wrap px-5 md:flex-row items-center justify-between">
             <div class="">
                 ITスクール浜松
-            </div>
+            </div>    
             <nav class="flex flex-wrap items-center text-base">
             @if (Route::has('login'))
                 <div class="gap-x-4 flex">
@@ -31,10 +31,11 @@
             @endif
             </nav>
         </div>
+        
     </header>
     <main class="h-screen">
         <div class="bg-blue-200 h-full">
-            <a href = "{{ route('weather')}}">天気</a>
+            @include('components/partials/weather')    
         </div>
     </main>
 </body>

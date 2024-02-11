@@ -30,7 +30,7 @@ class WeatherController extends Controller
             $formatWeekDays[] = Carbon::today()->addDays($i)->format('m-d');
         }
         //dd($weatherData);
-        return view('home.weather', compact('weatherData', 'cityName', 'formatWeekDays', 'startDay', 'endDay'));
+        return view('home.home', compact('weatherData', 'cityName', 'formatWeekDays', 'startDay', 'endDay'));
     }
 
     private function cityName($city)
