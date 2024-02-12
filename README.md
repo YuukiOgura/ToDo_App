@@ -2,7 +2,7 @@
 
  
 ## 1. リポジトリのクローン
-GitHubからくろーんしてきます。  
+GitHubからクローンしてきます。  
 ```$ git clone https://github.com/YuukiOgura/ToDo_App.git ```
 
 ## 2. .envファイルの作成
@@ -39,6 +39,9 @@ $ docker run --rm \
 ## APP_KEYの生成
 
 ```$ ./vendor/bin/sail artisan key:generate```
+
+## Preline UIのインストール
+```./vendor/bin/sail npm i preline```
 
 ## Node.js（インストール）
 

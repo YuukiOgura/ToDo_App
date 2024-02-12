@@ -33,12 +33,12 @@ class TaskCreateRequest extends FormRequest
     public function messages()
     {
         return [
-            'title_task.required' => 'タスク名を入力してください',
-            'title_task.max' => 'タスク名は最大20文字としてください',
-            'textarea.required' =>'タスクの説明文を入力してください',
-            'textarea.max' =>'タスクの説明文は最大255文字としてください',
-            'due_date.required' =>'期限日を設定してください',
-            'priority.required' =>'重要度を選択してください'
+            'title_task.required' => 'タスク名を入力してください。',
+            'title_task.max' => 'タスク名は最大20文字としてください。',
+            'textarea.required' =>'タスクの説明文を入力してください。',
+            'textarea.max' =>'タスクの説明文は最大255文字としてください。',
+            'due_date.required' =>'期限日を設定してください。',
+            'priority.required' =>'重要度を選択してください。'
         ];
     }
 }
