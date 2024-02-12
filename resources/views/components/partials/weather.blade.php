@@ -1,7 +1,7 @@
 <div class="mx-2 max-w-sm border rounded-lg border-gray-800 bg-sky-200 py-2">
   <div id="docs-sidebar" class="">
     <div class="flex gap-x-2 sm:px-10 px-5">
-      <div class="flex-none text-xl font-semibold flex items-center" href="#" aria-label="Brand">お天気情報
+      <div class="flex-none text-xl font-semibold flex items-center" href="#" aria-label="Brand">天気
         {{ $cityName }}
       </div>
       <div class="">
@@ -9,7 +9,9 @@
           @csrf
           <select name="city" id="city" class ="h-8 text-sm py-1 rounded-full focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
             <option value="Hamamatsu">浜松</option>
-            <option value="Shizuoka">静岡</option>
+            @foreach($prefectures as $kanjiPrefecture => $prefecture)
+            <option value="{{ $prefecture }}">{{$kanjiPrefecture}}</option>
+            @endforeach
           </select>
           <button type ="subimit" class=" rounded-full border border-gray-400 bg-green-400 text-white h-8 p-2 inline-flex items-center">選択</button>
         </form>
