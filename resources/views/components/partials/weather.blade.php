@@ -1,4 +1,4 @@
-<div class="mx-2 max-w-sm border rounded-lg border-gray-800 bg-sky-300 py-2">
+<div class="mx-2 max-w-sm border rounded-lg border-gray-800 bg-sky-200 py-2">
   <div id="docs-sidebar" class="">
     <div class="flex gap-x-2 sm:px-10 px-5">
       <div class="flex-none text-xl font-semibold flex items-center" href="#" aria-label="Brand">お天気情報
@@ -45,7 +45,7 @@
                 <nav class="flex mt-1" aria-label="Tabs" role="tablist" data-hs-tabs-vertical="true">
                   @foreach ($formatWeekDays as $formatWeekDay)
                     <button type ="button"
-                      class="py-1 px-2 border-b border-gray-400 bg-sky-200 inline-flex justify-center items-center gap-x-2 text-sm 
+                      class="py-1 px-2 border-b border-gray-400 bg-blue-200 inline-flex justify-center items-center gap-x-2 text-sm 
                       text-gray-500 shadow-lg hover:text-blue-800 focus:outline-none focus:text-blue-600 focus:bg-sky-400 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:text-blue-500 active"
                       id="vertical-tab-with-border-item-{{ $formatWeekDay }}"
                       data-hs-tab="#vertical-tab-with-border-{{ $formatWeekDay }}"
