@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="bg-slate-50">
     <header class="text-gray-600 body-font bg-blue-100">
         <div class="container sm:mx-auto flex flex-wrap px-5 md:flex-row items-center justify-between py-5">
             <div class="text-xl">
@@ -36,9 +36,12 @@
         </div>
         
     </header>
-    <main class="h-screen">
-        <div class="bg-blue-200 h-full">
-            @include('components/partials/weather')    
+    <main class="">
+        <div class="lg:flex">
+            @include('components/home/home')
+            <div class="lg:fixed">
+                @include('components/partials/weather')    
+            </div>
         </div>
     </main>
 </body>
