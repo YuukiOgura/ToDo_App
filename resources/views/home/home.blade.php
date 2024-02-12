@@ -39,7 +39,7 @@
     <main class="">
         <div class="lg:flex">
             @include('components/home/home')
-            <div class="lg:fixed">
+            <div class="lg:fixed right-0">
                 @include('components/partials/weather')    
             </div>
         </div>
