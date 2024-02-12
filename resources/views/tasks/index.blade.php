@@ -10,7 +10,7 @@
       <div class="">
         <div class="border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
 
-          <div class="py-3 px-4 flex justify-between">
+          <div class="py-3 px-4 flex lg:justify-between justify-center">
 
             <div class="flex">
               {{-- フォルダー追加モーダル --}}
