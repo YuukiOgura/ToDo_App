@@ -39,8 +39,8 @@ class ProfileController extends Controller
             Storage::disk('public')->delete($delete_profile_image);
         }
         
-        if ($request->hasFile('image')){
-            $profile_image_path = $request->file('image')->store('profile_image_path','public');
+        if ($request->hasFile('profile_image_path')){
+            $profile_image_path = $request->file('profile_image_path')->store('profile_image_path','public');
             $request->user()->profile_image_path = $profile_image_path;
         }
         
