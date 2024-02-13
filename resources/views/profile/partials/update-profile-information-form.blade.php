@@ -53,8 +53,8 @@
 
     <div class="">
       <div>
-        <label for="image" class="block text-sm font-medium text-gray-700">画像投稿</label>
-        <input type="file" name="image" id="image" class="mt-1" onchange="previewImage(event)" />
+        <label for="profile_image_path" class="block text-sm font-medium text-gray-700">画像投稿</label>
+        <input type="file" name="profile_image_path" id="profile_image_path" class="mt-1" onchange="previewImage(event)" />
       </div>
       <div class="">
         <img id="image-preview"
