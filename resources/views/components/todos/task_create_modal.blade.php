@@ -9,7 +9,7 @@
 <button type="button"
   class="sm:hidden py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-300 text-white hover:bg-blue-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
   data-hs-overlay="#hs-task_create-modal-{{ $user->id }}">
-  <img src="{{ asset('storage/icon/hanepen.png') }}" class ="w-8">
+  <img src="{{ Vite::asset('resources/images/home/hanepen.png') }}" class ="w-8">
 </button>
 
 <div id="hs-task_create-modal-{{ $user->id }}"
