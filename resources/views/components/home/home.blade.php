@@ -10,12 +10,12 @@
          
   
           <div class="col-span-3 shadow-lg">
-            <img src="{{ asset('storage/home/calendar.png') }}" class = "shadow-lg rounded-lg">
+            <img src="{{ Vite::asset('resources/images/home/calendar.png') }}" class = "shadow-lg rounded-lg">
           </div>
          
   
           <div class="col-span-5 shadow-lg">
-            <img src="{{ asset('storage/home/todo.png') }}" class = "shadow-lg rounded-lg">  
+            <img src="{{ Vite::asset('resources/images/home/todo.png') }}" class = "shadow-lg rounded-lg">  
           </div>
           
         </div>
