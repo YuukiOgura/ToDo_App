@@ -58,7 +58,7 @@
       </div>
       <div class="">
         <img id="image-preview"
-          src="{{ isset(Auth::user()->profile_image_path) ? Vite::asset('resources/images/profile_image_path/' . Auth::user()->profile_image_path) : aVite::asset('resources/images/profile_image_path/no-image.png') }}"
+          src="{{ isset(Auth::user()->profile_image_path) ? Vite::asset('resources/images/profile_image_path/' . Auth::user()->profile_image_path) : Vite::asset('resources/images/profile_image_path/no-image.png') }}"
           alt="" width="200">
       </div>
     </div>
