@@ -12,13 +12,10 @@ GitHubからクローンしてきます。
 
 ## Composerのインストール
 ## 2.1. .envファイルの編集
-.envファイルを以下の様に編集してください。  
-```DB_HOST=mysql```  
-```REDIS_HOST=redis```  
-```MAIL_FROM_ADDRESS=hello@example.com```  
+.envファイルの内容は、添付してありますGoogleドライブ内ToDoEnvをご覧ください。
 
 ## Composerのインストール
-Composerは、GitHubに上がっていないvendorに含まれている為インストールする。  
+Composerは、GitHubに上がっていないvendorに含まれている為インストールします。  
 ```
 $ docker run --rm \
     -u "$(id -u):$(id -g)" \
@@ -41,7 +38,14 @@ $ docker run --rm \
 ```$ ./vendor/bin/sail artisan key:generate```
 
 ## Preline UIのインストール
+
 ```./vendor/bin/sail npm i preline```
+
+## PusuerとLaravel Echo（インストール）
+Pusherのインストールをします。
+```./vendor/bin/sailcomposer require pusher/pusher-php-server```
+Laravel Echo等必要なライブラリをインストールします。
+```./vendor/bin/sail npm install --save laravel-echo pusher-js```
 
 ## Node.js（インストール）
 
@@ -49,6 +53,7 @@ $ docker run --rm \
 ## Node.js（フロントのビルド）
 
 ```$ ./vendor/bin/sail npm run dev```
+
 
 Laravel9.18以降はデフォルトでViteの使用になっています。  
 Node.jsでのパッケージ管理と開発環境のビルドを行う為にインストールとビルドを行いました。
