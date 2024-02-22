@@ -66,14 +66,18 @@ Node.jsでのパッケージ管理と開発環境のビルドを行う為にイ�
 ```$ ./vendor/bin/sail artisan migrate:fresh --seed```  
 
 マイグレーションを実行します。  
+
+## アクセス
+
+http://localhost/にアクセス。
+
+## ログイン
+
 ユーザー  
 test1@email.com  
 test2@email.com  
 test3@email.com  
 パスワード  
 test1234  
-でログインできます。
-
-## アクセス
-
-http://localhost/にアクセス。
+でログインできます。  
+又は、初回登録ボタンから登録後ログインしてください。
