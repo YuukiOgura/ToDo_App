@@ -43,8 +43,11 @@ $ docker run --rm \
 
 ## PusuerとLaravel Echo（インストール）
 Pusherのインストールをします。　
+
 ```./vendor/bin/sailcomposer require pusher/pusher-php-server```
+
 Laravel Echo等必要なライブラリをインストールします。　
+
 ```./vendor/bin/sail npm install --save laravel-echo pusher-js```
 
 ## Node.js（インストール）
