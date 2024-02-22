@@ -39,27 +39,41 @@ $ docker run --rm \
 
 ## Preline UIのインストール
 
-```./vendor/bin/sail npm i preline```
+```$ ./vendor/bin/sail npm i preline```
 
 ## PusuerとLaravel Echo（インストール）
 Pusherのインストールをします。　
 
-```./vendor/bin/sailcomposer require pusher/pusher-php-server```
+```$ ./vendor/bin/sailcomposer require pusher/pusher-php-server```
 
 Laravel Echo等必要なライブラリをインストールします。　
 
-```./vendor/bin/sail npm install --save laravel-echo pusher-js```
+```$ ./vendor/bin/sail npm install --save laravel-echo pusher-js```
 
 ## Node.js（インストール）
 
 ```$ ./vendor/bin/sail npm install```
+
 ## Node.js（フロントのビルド）
 
-```$ ./vendor/bin/sail npm run dev```
-
+```$ ./vendor/bin/sail npm run dev```　
 
 Laravel9.18以降はデフォルトでViteの使用になっています。  
 Node.jsでのパッケージ管理と開発環境のビルドを行う為にインストールとビルドを行いました。
+
+## マイグレーション
+
+```$ ./vendor/bin/sail artisan migrate:fresh --seed```  
+
+マイグレーションを実行します。
+ユーザー 　
+test1@email.com
+test2@email.com　
+test3@email.com 
+パスワード 
+test1234 
+でログインできます。
+
 ## アクセス
 
 http://localhost/にアクセス。
