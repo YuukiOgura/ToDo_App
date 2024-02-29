@@ -7,7 +7,7 @@
 <button type="button"
   class="sm:hidden py-2 px-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-orange-300 text-white hover:bg-orange-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
   data-hs-overlay="#hs-task-delete-modal">
-  <img src="{{ asset('storage/icon/kago.png') }}" class ="h-8 w-12">
+  <img src="{{ Vite::asset('resources/images/icon/kago.png') }}" class ="h-8 w-12">
 </button>
 
 <div id="hs-task-delete-modal"

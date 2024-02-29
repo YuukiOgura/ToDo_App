@@ -5,17 +5,17 @@
        
         <div class="grid grid-cols-12 gap-2 sm:gap-6 items-center lg:-translate-x-10">
           <div class="col-span-4 shadow-lg">
-            <img src="{{ asset('storage/home/chat.png') }}" class = "shadow-lg rounded-lg">  
+            <img src="{{ Vite::asset('resources/images/home/chat.png') }}" class = "shadow-lg rounded-lg">  
           </div>
          
   
           <div class="col-span-3 shadow-lg">
-            <img src="{{ asset('storage/home/calendar.png') }}" class = "shadow-lg rounded-lg">
+            <img src="{{ Vite::asset('resources/images/home/calendar.png') }}" class = "shadow-lg rounded-lg">
           </div>
          
   
           <div class="col-span-5 shadow-lg">
-            <img src="{{ asset('storage/home/todo.png') }}" class = "shadow-lg rounded-lg">  
+            <img src="{{ Vite::asset('resources/images/home/todo.png') }}" class = "shadow-lg rounded-lg">  
           </div>
           
         </div>
