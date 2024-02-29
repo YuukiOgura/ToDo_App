@@ -10,7 +10,6 @@ GitHubからクローンしてきます。
 
 ```$ cp .env.example .env```  
 
-## Composerのインストール
 ## 2.1. .envファイルの編集
 .envファイルの内容は、添付してありますGoogleドライブ内ToDoEnvをご覧ください。
 
