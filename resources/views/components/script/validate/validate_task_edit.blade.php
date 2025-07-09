@@ -64,7 +64,7 @@
             textareaEditError.style.display = "block";
           } else if (error === "タスクの説明文は最大255文字としてください。") {
             textareaEditError.textContent = error;
-            textareaEditErrorr.style.display = "block";
+            textareaEditError.style.display = "block";
           } else if (error === "期限日を設定してください。") {
             dueDateEditError.textContent = error;
             dueDateEditError.style.display = "block";

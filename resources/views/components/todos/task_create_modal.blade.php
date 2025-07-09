@@ -1,5 +1,6 @@
 <!-- ブラウザサイズの場合 -->
 <button type="button"
+  id="create-task-trigger-desktop"
   class="hidden sm:inline-block py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-300 text-white hover:bg-blue-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
   data-hs-overlay="#hs-task_create-modal-{{ $user->id }}">
   タスク作成
@@ -7,6 +8,7 @@
 
 <!-- スマホサイズの場合 -->
 <button type="button"
+  id="create-task-trigger-mobile"
   class="sm:hidden py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-300 text-white hover:bg-blue-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
   data-hs-overlay="#hs-task_create-modal-{{ $user->id }}">
   <img src="{{ Vite::asset('resources/images/icon/hanepen.png') }}" class ="w-8">
@@ -23,6 +25,7 @@
           タスク作成
         </h3>
         <button type="button"
+          id="create-task-modal-close"
           class="flex justify-center items-center w-7 h-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
           data-hs-overlay="#hs-task_create-modal-{{ $user->id }}">
           <span class="sr-only">Close</span>
@@ -35,7 +38,7 @@
         </button>
       </div>
 
-      <form action="{{ route('tasks.store', [$id]) }}" method="post" onsubmit="return validateFormTask()">
+      <form action="{{ route('tasks.store', [$folderFirst->id]) }}" method="post" onsubmit="return validateFormTask()">
         @csrf
         <div class="p-4 overflow-y-auto">
           <p class="mt-1 mb-10 text-gray-800 dark:text-gray-400">
@@ -120,12 +123,14 @@
 
           <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
             <button type="button"
+              id="create-task-modal-back"
               class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               data-hs-overlay="#hs-task_create-modal-{{ $user->id }}">
               戻る
             </button>
 
             <button type="submit"
+              id="create-task-modal-save"
               class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
               保存
             </button>

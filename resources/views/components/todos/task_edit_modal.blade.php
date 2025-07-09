@@ -59,15 +59,15 @@
               focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 text-base outline-none 
               text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
 
-                <input type="radio" name ="priority" value=1 {{ $task->priority === '重要' ? 'checked' : '' }}
+                <input type="radio" name ="priority" value=1 {{ $task->priority == 1 ? 'checked' : '' }}
                   id = "priority1Edit" class="mr-2" required>
                 <label for="priority1Edit" class="mr-4">重要</label>
 
-                <input type="radio" name ="priority" value=2 {{ $task->priority === '普通' ? 'checked' : '' }}
+                <input type="radio" name ="priority" value=2 {{ $task->priority == 2 ? 'checked' : '' }}
                   id = "priority2Edit" class="mx-4" required>
                 <label for="priority2Edit" class="mr-4">普通</label>
 
-                <input type="radio" name ="priority" value=3 {{ $task->priority === '後回し' ? 'checked' : '' }}
+                <input type="radio" name ="priority" value=3 {{ $task->priority == 3 ? 'checked' : '' }}
                   id = "priority3Edit" class="ml-2" required>
                 <label for="priority3Edit">後回し</label>
 

@@ -66,6 +66,17 @@ class TaskController extends Controller
     public function edit(int $id, TaskEditRequest $request)
     {
         $task = Task::find($id);
+        
+        if (!$task) {
+            return redirect()->route('tasks.index')->with('error', 'Task not found');
+        }
+        
+        // Check if the task belongs to the current user's folders
+        $userFolderIds = Auth::user()->folders()->pluck('id');
+        if (!$userFolderIds->contains($task->folder_id)) {
+            return redirect()->route('tasks.index')->with('error', 'Unauthorized access');
+        }
+        
         $task->title = $request->title_task;
         $task->due_date = $request->due_date;
         $task->priority = $request->priority;
@@ -74,7 +85,7 @@ class TaskController extends Controller
 
         $task->save();
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
     }
 
     public function destroy(TaskDeleteRequest $request)

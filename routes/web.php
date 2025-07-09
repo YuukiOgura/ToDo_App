@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     // タスク追加機能
     Route::post('/folders/{id}/tasks/create', [TaskController::class, 'store'])->name('tasks.store');
     // タスク編集機能
-    Route::post('/folders/{id}/tasks/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::post('/tasks/{id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
     // タスク完了機能
     Route::post('/folders/tasks/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
     // タスク削除機能

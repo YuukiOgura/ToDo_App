@@ -1,7 +1,5 @@
-<!DOCTYPE html>
 @extends('layouts.main')
 @section('title', 'ToDo')
-@vite(['resources/css/app.css', 'resources/js/app.js'])
 @section('navTitle', 'ToDo')
 
 @section('content')
@@ -122,6 +120,7 @@
                                   <form action="{{ route('tasks.complete') }}" method="post">
                                     @csrf
                                     <button type="submit" name='del_flug' value="{{ $task->id }}"
+                                      id="complete-task-{{ $task->id }}"
                                       class = "py-1 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-yellow-300 text-white hover:bg-yellow-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                       完了
                                     </button>
