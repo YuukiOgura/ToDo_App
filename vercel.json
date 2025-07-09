@@ -1,54 +1,22 @@
 {
-    "regions": [
-        "hnd1"
-    ],
-    "builds": [
-        {
-            "src": "/api/index.php",
-            "use": "vercel-php@0.7.0"
-        },
-        {
-            "src": "/public/**",
-            "use": "@vercel/static"
-        }
-    ],
-    "build": {
-        "env": {
-            "COMPOSER_ALLOW_SUPERUSER": "1"
-        }
-    },
-    "buildCommand": "npm install && npm run build && composer install --no-dev --optimize-autoloader && php artisan event:cache && php artisan config:cache && php artisan route:cache",
+    "buildCommand": "npm install && npm run build",
     "outputDirectory": "public",
     "routes": [
         {
             "src": "/build/assets/(.*)",
-            "dest": "/public/build/assets/$1"
+            "dest": "/build/assets/$1"
         },
         {
             "src": "/favicon.ico",
-            "dest": "/public/favicon.ico"
+            "dest": "/favicon.ico"
         },
         {
             "src": "/robots.txt",
-            "dest": "/public/robots.txt"
+            "dest": "/robots.txt"
         },
         {
             "src": "/(.*)",
-            "dest": "/api/index.php"
+            "dest": "/index.html"
         }
-    ],
-    "env": {
-        "APP_NAME": "Laravel Vercel",
-        "APP_DEBUG": "false",
-        "APP_CONFIG_CACHE": "/tmp/config.php",
-        "APP_EVENTS_CACHE": "/tmp/events.php",
-        "APP_PACKAGES_CACHE": "/tmp/packages.php",
-        "APP_ROUTES_CACHE": "/tmp/routes.php",
-        "APP_SERVICES_CACHE": "/tmp/services.php",
-        "APP_STORAGE": "/tmp",
-        "CACHE_DRIVER": "array",
-        "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie",
-        "VIEW_COMPILED_PATH": "/tmp"
-    }
+    ]
 }
